@@ -1,7 +1,8 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    max-width: 280px;
+    width: 100%;
+    max-width: 310px;
     padding: 10px;
     background-color: var(--box-white);
     border-radius: 5px;
@@ -42,6 +43,7 @@
 
 .admin-label input:checked {
     background-color: var(--main-blue);
+    background: radial-gradient(var(--main-blue) 0 45%, transparent 50%)
 }
 
 .admin-label span {
@@ -61,6 +63,6 @@
     cursor: pointer;
 }
 
-.form-container:active {
+.form-container button:active {
     opacity: 0.8;
 }

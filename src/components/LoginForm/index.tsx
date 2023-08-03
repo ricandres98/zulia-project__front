@@ -1,9 +1,16 @@
-import React, { FormEventHandler } from "react";
+import React, { FormEventHandler, useContext } from "react";
 import styles from "./styles.module.css";
+import { authContext } from "../../hooks/useAuth";
+import { useRouter } from "next/router";
 
 const LoginForm = () => {
+  const { login } = useContext(authContext);
+  const router = useRouter();
+
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    login();
+    router.push("/");
   };
 
   return (

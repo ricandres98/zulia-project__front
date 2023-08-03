@@ -1,37 +1,51 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BarsIcon } from "../../Icons/BarsIcon";
 import { XMarkIcon } from "../../Icons/XMarkIcon";
 import { UserIcon } from "../../Icons/UserIcon";
 import { EnvelopeIcon } from "../../Icons/EnvelopeIcon";
+import { authContext } from "../../hooks/useAuth";
 import styles from "./styles.module.css";
 
-const Header = () => {
+interface PropTypes {
+  className?: string;
+}
+
+const Header = ({ className }: PropTypes) => {
   const [openMenu, setOpenMenu] = useState(false);
+  const { isAuth } = useContext(authContext);
 
   return (
     <>
-      <header className={styles.header}>
+      <header
+        className={className ? `${styles.header} ${className}` : styles.header}
+      >
         <h1 className={styles.header__title}>Edificio Zulia</h1>
-        <nav className={styles["navBar--desktop"]}>
-          <ul>
-            {navItems.map((item) => (
-              <li key={item.linkTo}>
-                <Link href="/">{item.withIcon ? item.icon : item.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <button
-          className={styles["menu-button"]}
-          onClick={() => setOpenMenu(true)}
-        >
-          <BarsIcon />
-        </button>
-        {openMenu && (
-          <NavBarMobile linkList={navItems} close={() => setOpenMenu(false)} />
+        {!!isAuth && (
+          <>
+            <nav className={styles["navBar--desktop"]}>
+              <ul>
+                {navItems.map((item) => (
+                  <li key={item.linkTo}>
+                    <Link href="/">
+                      {item.withIcon ? item.icon : item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <button
+              className={styles["menu-button"]}
+              onClick={() => setOpenMenu(true)}
+            >
+              <BarsIcon />
+            </button>
+          </>
         )}
       </header>
+      {openMenu && (
+        <NavBarMobile linkList={navItems} close={() => setOpenMenu(false)} />
+      )}
     </>
   );
 };

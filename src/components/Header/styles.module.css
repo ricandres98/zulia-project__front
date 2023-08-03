@@ -1,7 +1,7 @@
 .header {
     position: relative;
     width: 100%;
-    padding: 30px 20px;
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,7 +26,8 @@
 
 .navBar--mobile {
     width: 100vw;
-    position: absolute;
+    height: 100vh;
+    position: fixed;
     top: 0;
     left: 0;
     background-color: var(--main-blue);
