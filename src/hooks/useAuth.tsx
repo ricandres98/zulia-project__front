@@ -1,23 +1,28 @@
-import React from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 
 interface initialValueType {
   isAuth: boolean | unknown;
   login: () => void;
   logout: () => void;
+  firstLoad: boolean;
+  setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const authContext = React.createContext<initialValueType>({
   isAuth: false,
   login: () => {},
   logout: () => {},
+  firstLoad: true,
+  setFirstLoad: () => {},
 });
 
 const useAuth = () => {
-  const { item: isAuth, setItem: setIsAuth } = useLocalStorage(
+  const { item: isAuth, saveItem: setIsAuth } = useLocalStorage(
     "ZuliaUser_V1",
     false,
   );
+  const [firstLoad, setFirstLoad] = useState(true);
 
   const login = () => {
     setIsAuth(true);
@@ -27,14 +32,10 @@ const useAuth = () => {
     setIsAuth(false);
   };
 
-  return { isAuth, login, logout };
+  return { isAuth, login, logout, firstLoad, setFirstLoad };
 };
 
-interface PropTypes {
-  children: React.JSX.Element;
-}
-
-const AuthProvider = ({ children }: PropTypes) => {
+const AuthProvider = ({ children }: PropsWithChildren) => {
   const value = useAuth();
 
   return <authContext.Provider value={value}>{children}</authContext.Provider>;

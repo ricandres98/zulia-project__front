@@ -3,3 +3,8 @@
     height: 32px;
     color: var(--white)
 }
+.small-pen {
+    width: 24px;
+    height: 24px;
+    color: var(--green);
+}

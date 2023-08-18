@@ -1,0 +1,37 @@
+.user-info-field {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    max-width: 320px;
+    border-bottom: 1px solid var(--gray);
+}
+
+.user-info-field__data {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info-field__data span.field {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.user-info-field__data span.value {
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+.user-info-field button {
+    width: 34px;
+    height: 34px;
+    background-color: var(--box-white);
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    cursor: pointer;
+}
+
+.user-info-field button:active {
+    background-color: var(--gray);
+}

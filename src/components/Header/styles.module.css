@@ -1,7 +1,7 @@
 .header {
     position: relative;
     width: 100%;
-    padding: 20px 30px;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,11 +77,21 @@
     cursor: pointer;
 }
 
-.footer {
-    font-size: 5px;
+.logout-button {
+    border: none;
+    font: var(--font);
+    font-size: 1.8rem;
+    background-color: inherit;
+    color: var(--white);
+    text-transform: capitalize;
+    cursor: pointer;
 }
 
 @media screen and (min-width: 900px) {
+    .header {
+        padding: 20px 30px;
+    }
+
     .navBar--desktop {
         display: block;
     }

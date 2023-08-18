@@ -1,0 +1,23 @@
+.user-info-container {
+    display: grid;
+    justify-content: center;
+    gap: 0 20px;
+    grid-template-columns: repeat(auto-fill, 320px);
+    /* max-width: 360px; */
+    /* margin: 0 auto; */
+    padding: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: var(--box-white);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 900px) {
+    .user-info-container {
+        gap: 0 30px;
+        justify-content: space-evenly;
+        grid-template-columns: repeat(auto-fill, 320px);
+        grid-template-rows: 1fr 1fr;
+        padding: 20px;
+    } 
+}

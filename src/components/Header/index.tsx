@@ -13,25 +13,32 @@ interface PropTypes {
 
 const Header = ({ className }: PropTypes) => {
   const [openMenu, setOpenMenu] = useState(false);
-  const { isAuth } = useContext(authContext);
+  const { isAuth, logout } = useContext(authContext);
 
   return (
     <>
       <header
         className={className ? `${styles.header} ${className}` : styles.header}
       >
-        <h1 className={styles.header__title}>Edificio Zulia</h1>
+        <h1 className={styles.header__title}>
+          <Link href="/">Edificio Zulia</Link>
+        </h1>
         {!!isAuth && (
           <>
             <nav className={styles["navBar--desktop"]}>
               <ul>
                 {navItems.map((item) => (
                   <li key={item.linkTo}>
-                    <Link href="/">
+                    <Link href={item.linkTo}>
                       {item.withIcon ? item.icon : item.name}
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <button onClick={logout} className={styles["logout-button"]}>
+                    logout
+                  </button>
+                </li>
               </ul>
             </nav>
             <button
@@ -65,6 +72,7 @@ type NavBarMobileProps = {
 };
 
 const NavBarMobile = ({ linkList, close }: NavBarMobileProps) => {
+  const { logout } = useContext(authContext);
   return (
     <nav className={styles["navBar--mobile"]}>
       <div className={`${styles.close} ${styles.row}`}>
@@ -78,6 +86,11 @@ const NavBarMobile = ({ linkList, close }: NavBarMobileProps) => {
             <Link href={link.linkTo}>{link.name}</Link>
           </li>
         ))}
+        <li className={styles.row}>
+          <button onClick={logout} className={styles["logout-button"]}>
+            logout
+          </button>
+        </li>
       </ul>
     </nav>
   );
@@ -90,7 +103,7 @@ const navItems: linkList = [
   },
   {
     name: "datos",
-    linkTo: "/user",
+    linkTo: "/user/1",
     withIcon: true,
     icon: <UserIcon color="#009993" />,
   },

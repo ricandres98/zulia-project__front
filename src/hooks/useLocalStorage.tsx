@@ -13,7 +13,12 @@ const useLocalStorage = (itemName: string, initialValue: unknown) => {
     }
   }, []);
 
-  return { item, setItem };
+  const saveItem = (value: any) => {
+    setItem(value);
+    localStorage.setItem(itemName, JSON.stringify(value));
+  };
+
+  return { item, saveItem };
 };
 
 export { useLocalStorage };
