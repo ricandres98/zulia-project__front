@@ -1,11 +1,32 @@
+import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { UserInfoField } from "../../components/UserInfoField";
 import { AuthorizationContainer } from "../../containers/AuthorizationContainer";
 import { UserInfoContainer } from "../../containers/UserInfoContainer";
+import { useFetch } from "../../hooks/useFetch";
 import { UserData } from "../../types/userTypes";
 import styles from "./styles.module.css";
+import { useRouter } from "next/router";
 
-const userPage = () => {
+const UserPage = () => {
+  const [userInfo, setUserInfo] = useState<UserData[]>([]);
+  const router = useRouter();
+  const { getUserById } = useFetch();
+
+  useEffect(() => {
+    (async () => {
+      if (router.isReady) {
+        const { id } = router.query;
+        const [err, data] = await getUserById(id as string);
+        if (!err) {
+          setUserInfo(formatUserInfo(data));
+        } else {
+          console.error(err);
+        }
+      }
+    })();
+  }, [router, getUserById]);
+
   return (
     <>
       <AuthorizationContainer>
@@ -28,15 +49,23 @@ const userPage = () => {
   );
 };
 
-const userInfo: UserData[] = [
+const formatUserInfo = (data: {
+  id: number;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  apartment: string;
+  residence: string;
+}): UserData[] => [
   {
     field: "Nombre propietario",
-    value: "Ricardo Ojeda",
+    value: `${data.firstName} ${data.lastName}`,
     editable: true,
   },
   {
     field: "Correo electrónico",
-    value: "ricardo@mail.com",
+    value: data.email,
     editable: false,
   },
   {
@@ -46,9 +75,9 @@ const userInfo: UserData[] = [
   },
   {
     field: "Apartamento",
-    value: "9A",
+    value: data.apartment,
     editable: false,
   },
 ];
 
-export default userPage;
+export default UserPage;
