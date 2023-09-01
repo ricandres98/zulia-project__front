@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 26px;
     max-width: 320px;
     border-bottom: 1px solid var(--gray);
 }
@@ -19,6 +19,7 @@
 }
 
 .user-info-field__data span.value {
+    margin-top: 16px;
     font-size: 1.6rem;
     font-weight: 400;
 }
@@ -30,6 +31,26 @@
     border-radius: 5px;
     border: 1px solid var(--gray);
     cursor: pointer;
+}
+
+.user-info-field .edit-form {
+    display: flex;
+    gap: 5px;
+}
+
+.user-info-field .edit-form input {
+    height: 34px;
+    margin-bottom: 5px;
+    border: 1px solid var(--gray);
+    border-radius: 5px;
+    font-size: 1.6rem;
+    font-family: var(--font);
+    padding: 2px 5px;
+    background-color: inherit;
+}
+
+.user-info-field input:focus-visible {
+    outline: 1px solid var(--main-blue);
 }
 
 .user-info-field button:active {

@@ -5,8 +5,8 @@ import { AuthorizationContainer } from "../../containers/AuthorizationContainer"
 import { UserInfoContainer } from "../../containers/UserInfoContainer";
 import { useFetch } from "../../hooks/useFetch";
 import { UserData } from "../../types/userTypes";
-import styles from "./styles.module.css";
 import { useRouter } from "next/router";
+import styles from "./styles.module.css";
 
 const UserPage = () => {
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
