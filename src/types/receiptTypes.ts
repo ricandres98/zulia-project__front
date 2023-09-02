@@ -14,6 +14,7 @@ export interface ExpensesType {
 }
 
 export interface ReceiptGeneralInfoType {
+  id: number;
   date: string;
   month: string;
   year: number;

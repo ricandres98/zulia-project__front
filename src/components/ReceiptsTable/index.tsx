@@ -32,7 +32,8 @@ const ReceiptsTable = () => {
             date={receipt.date}
             month={receipt.month}
             year={receipt.year}
-            key={receipt.date}
+            key={receipt.id}
+            id={receipt.id}
           />
         ))}
       </div>
@@ -58,10 +59,15 @@ const ReceiptsTable = () => {
 //   },
 // ];
 
-const ReceiptRowComponent = ({ date, month, year }: ReceiptGeneralInfoType) => {
+const ReceiptRowComponent = ({
+  date,
+  month,
+  year,
+  id,
+}: ReceiptGeneralInfoType) => {
   return (
     <Link
-      href={`/receipt/${1234}`}
+      href={`/receipt/${id}`}
       className={styles.ReceiptsTable__content__row}
     >
       <span>{date}</span>
