@@ -1,0 +1,49 @@
+:root {
+  --main-blue: #38ADFA;
+  --light-blue: #38acfa3f;
+  --light-blue-2: rgba(56, 173, 250, 0.50);
+  --green: #009993;
+  --gray: #D9D9D9;
+  --white-blue: #EDEFFD;
+  --white: #ECF4FF;
+  --box-white: #FBFBFB;
+  --background-white: #F5F5F5;
+  --font: 'Lato', sans-serif;
+  --black: #021826;
+  --black-blue: rgba(2, 24, 38, 0.80);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--background-white);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+
+ul {
+  list-style: none;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+} */

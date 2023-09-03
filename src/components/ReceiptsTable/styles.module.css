@@ -1,0 +1,77 @@
+.ReceiptsTable__head {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 10px;
+    margin-bottom: 14px;
+}
+
+.ReceiptsTable__head h3 {
+    color: var(--green);
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.ReceiptsTable__head h3:nth-of-type(2), 
+.ReceiptsTable__content__row span:nth-of-type(2) {
+    justify-self: end;
+}
+.ReceiptsTable__content__row span:nth-of-type(2) {
+    text-transform: capitalize;
+}
+
+.ReceiptsTable__head h3:nth-of-type(3),
+.ReceiptsTable__content__row span:nth-of-type(3) {
+    display: none;
+}
+
+.ReceiptsTable__content {
+    background-color: var(--box-white);
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ReceiptsTable__content__row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 15px 10px;
+    border-bottom: 1px solid var(--gray);
+    cursor: pointer;
+}
+
+.ReceiptsTable__content__row:hover {
+    background-color: var(--light-blue);
+}
+
+.ReceiptsTable__content__row span {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--black);
+}
+
+
+@media (min-width: 900px) {
+    .ReceiptsTable__head, 
+    .ReceiptsTable__content__row {
+    grid-template-columns: repeat(3, 1fr);
+        
+    }
+
+    .ReceiptsTable__head h3 {
+        font-size: 2rem;
+    }
+
+    .ReceiptsTable__head h3:nth-of-type(2), 
+    .ReceiptsTable__content__row span:nth-of-type(2) {
+        justify-self: center;
+    }
+
+    .ReceiptsTable__head h3:nth-of-type(3),
+    .ReceiptsTable__content__row span:nth-of-type(3) {
+        display: block;
+        justify-self: end;
+    }
+    
+    .ReceiptsTable__content__row span:nth-of-type(3) {
+        display: block;
+    }
+}

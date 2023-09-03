@@ -1,0 +1,68 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 310px;
+    padding: 10px;
+    background-color: var(--box-white);
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+.form-container label {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-family: var(--font);
+    color: var(--black);
+}
+
+.form-container input {
+    margin-bottom: 16px;
+    padding: 10px;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-size: 1.4rem;
+    font-family: var(--font);
+}
+.admin-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-label input {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0;
+    appearance: unset;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.admin-label input:checked {
+    background-color: var(--main-blue);
+    background: radial-gradient(var(--main-blue) 0 45%, transparent 50%)
+}
+
+.admin-label span {
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.form-container button {
+    height: 60px;
+    border: none;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    background-color: var(--main-blue);
+    border-radius: 5px;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.form-container button:active {
+    opacity: 0.8;
+}
