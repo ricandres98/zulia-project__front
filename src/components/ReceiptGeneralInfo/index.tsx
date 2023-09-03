@@ -1,8 +1,8 @@
-import { ReceiptInfo } from "../../types/receiptTypes";
+import { ReceiptDetailedInfoType } from "../../types/receiptTypes";
 import styles from "./styles.module.css";
 
 interface PropTypes {
-  receiptInfo: ReceiptInfo | undefined;
+  receiptInfo: ReceiptDetailedInfoType | undefined;
 }
 
 const ReceiptGeneralInfo = ({ receiptInfo }: PropTypes) => {
@@ -31,12 +31,12 @@ const ReceiptGeneralInfo = ({ receiptInfo }: PropTypes) => {
         </div>
         <div className={`${styles.item} ${styles.total}`}>
           <span>Monto a pagar</span>
-          <span>{receiptInfo?.owedAmount}</span>
+          <span>{receiptInfo?.owedAmount.toFixed(2)}</span>
         </div>
       </div>
       <div className={styles.total}>
         <span>Monto a pagar</span>
-        <span>Bs {receiptInfo?.owedAmount}</span>
+        <span>Bs {receiptInfo?.owedAmount.toFixed(2)}</span>
       </div>
     </div>
   );

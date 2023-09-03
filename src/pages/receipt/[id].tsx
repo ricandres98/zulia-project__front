@@ -6,6 +6,7 @@ import { ReceiptDetailedInfoType } from "../../types/receiptTypes";
 import styles from "./styles.module.css";
 import { AuthorizationContainer } from "../../containers/AuthorizationContainer";
 import { useFetch } from "../../hooks/useFetch";
+import { useRouter } from "next/router";
 
 // const receiptInfo: ReceiptInfo = {
 //   property: "A9",
@@ -36,18 +37,24 @@ export default function ReceiptPage() {
     ReceiptDetailedInfoType | undefined
   >(undefined);
 
+  const router = useRouter();
   const { getReceiptInfo } = useFetch();
 
   useEffect(() => {
-    (async () => {
-      const [err, data] = await getReceiptInfo(21);
+    const fetchData = async () => {
+      const { id } = router.query;
+      const [err, data] = await getReceiptInfo(parseInt(id as string));
       if (!err) {
         setReceiptInfo(data);
       } else {
         console.error(err);
       }
-    })();
-  }, [getReceiptInfo]);
+    };
+
+    if (router.isReady) {
+      fetchData();
+    }
+  }, [router.isReady]);
 
   return (
     <>

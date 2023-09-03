@@ -1,5 +1,5 @@
 const useFetch = () => {
-  const getReceiptInfo = async (id: string | number) => {
+  const getReceiptInfo = async (id: number) => {
     try {
       const res = await fetch(`http://localhost:8000/api/v1/receipts/${id}`);
       const data = await res.json();

@@ -1,8 +1,11 @@
-import { ExpensesType, ReceiptInfo } from "../../types/receiptTypes";
+import {
+  ExpensesType,
+  ReceiptDetailedInfoType,
+} from "../../types/receiptTypes";
 import styles from "./styles.module.css";
 
 interface PropTypes {
-  receiptInfo: ReceiptInfo | undefined;
+  receiptInfo: ReceiptDetailedInfoType | undefined;
 }
 
 const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
@@ -14,8 +17,8 @@ const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
     );
   } else {
     const subtotal: number = receiptInfo.expenses
-      .map((expense) => expense.amount)
-      .reduce((prev, curr) => prev + curr, 0);
+      .map((expense: ExpensesType) => expense.amount)
+      .reduce((prev: number, curr: number) => prev + curr, 0);
 
     const reserva20 = subtotal * 0.2;
     const total = subtotal + reserva20;

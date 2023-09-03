@@ -17,7 +17,7 @@ const ReceiptsTable = () => {
         console.error(err);
       }
     })();
-  });
+  }, []);
 
   return (
     <>
