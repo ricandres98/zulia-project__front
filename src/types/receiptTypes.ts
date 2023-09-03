@@ -6,6 +6,8 @@ export interface ReceiptDetailedInfoType {
   aliquot: number;
   owedAmount: number;
   expenses: ExpensesType[];
+  debt?: number;
+  penalty?: number;
 }
 
 export interface ExpensesType {

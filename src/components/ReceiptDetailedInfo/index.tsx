@@ -61,15 +61,17 @@ const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
             extraClass="aliquot"
           />
         </div>
-        <div className={styles["DetailedInfo-separator"]}>
-          <ExpenseItem description="Deuda" amount={100} />
-          <ExpenseItem description="Penalidad" amount={100} />
-        </div>
+        {receiptInfo.debt && receiptInfo.penalty && (
+          <div className={styles["DetailedInfo-separator"]}>
+            <ExpenseItem description="Deuda" amount={receiptInfo.debt} />
+            <ExpenseItem description="Penalidad" amount={receiptInfo.penalty} />
+          </div>
+        )}
         <div className={styles["DetailedInfo-separator"]}>
           <ExpenseItem
             extraClass="total"
             description="Total a pagar"
-            amount={aliquot}
+            amount={receiptInfo.owedAmount}
           />
         </div>
       </div>
