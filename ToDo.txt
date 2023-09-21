@@ -1,0 +1,5 @@
+- Implementar pantalla de error en la página principal cuando no sea posible 
+  conectarse con el servidor para recuperar información.
+
+- Ajustar que la página principal contenga algún tipo de información en la url que permita
+  solicitar la información del usuario por Id, sin exponer información sensible.
