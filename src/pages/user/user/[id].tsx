@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { Header } from "../../components/Header";
-import { UserInfoField } from "../../components/UserInfoField";
-import { AuthorizationContainer } from "../../containers/AuthorizationContainer";
-import { UserInfoContainer } from "../../containers/UserInfoContainer";
-import { useFetch } from "../../hooks/useFetch";
-import { UserData } from "../../types/userTypes";
+import { Header } from "../../../components/Header";
+import { UserInfoField } from "../../../components/UserInfoField";
+import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
+import { UserInfoContainer } from "../../../containers/UserInfoContainer";
+import { UserData } from "../../../types/userTypes";
 import { useRouter } from "next/router";
 import styles from "./styles.module.css";
+import { fetchFunc } from "../../../utils/fetchFunc";
 
 const UserPage = () => {
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
   const router = useRouter();
-  const { getUserById } = useFetch();
 
   useEffect(() => {
+    const { getUserById } = fetchFunc();
     (async () => {
       if (router.isReady) {
         const { id } = router.query;
@@ -25,7 +25,7 @@ const UserPage = () => {
         }
       }
     })();
-  }, [router, getUserById]);
+  }, [router]);
 
   return (
     <>

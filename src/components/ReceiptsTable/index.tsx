@@ -67,7 +67,7 @@ const ReceiptRowComponent = ({
 }: ReceiptGeneralInfoType) => {
   return (
     <Link
-      href={`/receipt/${id}`}
+      href={`/user/receipt/${id}`}
       className={styles.ReceiptsTable__content__row}
     >
       <span>{date}</span>

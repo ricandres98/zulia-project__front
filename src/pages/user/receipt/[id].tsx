@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Header } from "../../components/Header";
-import { ReceiptGeneralInfo } from "../../components/ReceiptGeneralInfo";
-import { ReceiptDetailedInfo } from "../../components/ReceiptDetailedInfo";
-import { ReceiptDetailedInfoType } from "../../types/receiptTypes";
+import { Header } from "../../../components/Header";
+import { ReceiptGeneralInfo } from "../../../components/ReceiptGeneralInfo";
+import { ReceiptDetailedInfo } from "../../../components/ReceiptDetailedInfo";
+import { ReceiptDetailedInfoType } from "../../../types/receiptTypes";
 import styles from "./styles.module.css";
-import { AuthorizationContainer } from "../../containers/AuthorizationContainer";
-import { useFetch } from "../../hooks/useFetch";
+import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
+import { fetchFunc } from "../../../utils/fetchFunc";
 import { useRouter } from "next/router";
 
 // const receiptInfo: ReceiptInfo = {
@@ -38,9 +38,9 @@ export default function ReceiptPage() {
   >(undefined);
 
   const router = useRouter();
-  const { getReceiptInfo } = useFetch();
 
   useEffect(() => {
+    const { getReceiptInfo } = fetchFunc();
     const fetchData = async () => {
       const { id } = router.query;
       const [err, data] = await getReceiptInfo(parseInt(id as string));
@@ -54,14 +54,14 @@ export default function ReceiptPage() {
     if (router.isReady) {
       fetchData();
     }
-  }, [router.isReady]);
+  }, [router]);
 
   return (
     <>
       <AuthorizationContainer>
         <Header />
         <main className={styles["main-container"]}>
-          <h2>Apartamento 9A</h2>
+          <h2>Apartamento {receiptInfo?.property}</h2>
           <ReceiptGeneralInfo receiptInfo={receiptInfo} />
           <ReceiptDetailedInfo receiptInfo={receiptInfo} />
         </main>

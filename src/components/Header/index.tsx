@@ -103,7 +103,7 @@ const navItems: linkList = [
   },
   {
     name: "datos",
-    linkTo: "/user/1",
+    linkTo: "/user/user/1",
     withIcon: true,
     icon: <UserIcon color="#009993" />,
   },
