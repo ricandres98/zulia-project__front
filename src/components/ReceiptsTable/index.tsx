@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import { useFetch } from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import { ReceiptGeneralInfoType } from "../../types/receiptTypes";
+import { formatDate } from "../../utils/formatDate";
 
 const ReceiptsTable = () => {
   const [receipts, setReceipts] = useState<ReceiptGeneralInfoType[]>([]);
@@ -70,7 +71,7 @@ const ReceiptRowComponent = ({
       href={`/user/receipt/${id}`}
       className={styles.ReceiptsTable__content__row}
     >
-      <span>{date}</span>
+      <span>{formatDate(date)}</span>
       <span>{month}</span>
       <span>{year}</span>
     </Link>

@@ -1,7 +1,11 @@
+import { config } from "./config";
+
+const API_URL = config.apiUrl;
+
 const fetchFunc = () => {
   const getReceiptInfo = async (id: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/receipts/${id}`);
+      const res = await fetch(`${API_URL}/api/v1/receipts/${id}`);
       const data = await res.json();
       return [null, data];
     } catch (err) {
@@ -11,7 +15,7 @@ const fetchFunc = () => {
 
   const getReceiptsList = async () => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/receipts`);
+      const res = await fetch(`${API_URL}/api/v1/receipts`);
       const data = await res.json();
       return [null, data];
     } catch (err) {
@@ -19,9 +23,9 @@ const fetchFunc = () => {
     }
   };
 
-  const getUserById = async (id: string) => {
+  const getApartmentById = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/users/${id}`);
+      const res = await fetch(`${API_URL}/api/v1/apartments/${id}`);
       const data = await res.json();
       return [null, data];
     } catch (err) {
@@ -29,7 +33,17 @@ const fetchFunc = () => {
     }
   };
 
-  return { getReceiptInfo, getReceiptsList, getUserById };
+  const getTransactionsList = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/v1/transactions`);
+      const data = await res.json();
+      return [null, data];
+    } catch (error) {
+      return [error, null];
+    }
+  };
+
+  return { getReceiptInfo, getReceiptsList, getApartmentById, getTransactionsList };
 };
 
 export { fetchFunc };

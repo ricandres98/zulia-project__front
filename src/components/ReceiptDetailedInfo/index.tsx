@@ -16,13 +16,13 @@ const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
       </>
     );
   } else {
-    const subtotal: number = receiptInfo.expenses
+    const subtotal: number = receiptInfo.period.commonExpenses
       .map((expense: ExpensesType) => expense.amount)
       .reduce((prev: number, curr: number) => prev + curr, 0);
 
     const reserva20 = subtotal * 0.2;
     const total = subtotal + reserva20;
-    const aliquot = (total * receiptInfo.aliquot) / 100;
+    const aliquot = (total * receiptInfo.apartment.aliquot) / 100;
 
     return (
       <div className="DetailedInfo">
@@ -31,7 +31,7 @@ const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
           <span>Monto</span>
         </div>
         <div className={styles["DetailedInfo-separator"]}>
-          {receiptInfo?.expenses.map((expense: ExpensesType) => (
+          {receiptInfo?.period.commonExpenses.map((expense: ExpensesType) => (
             <ExpenseItem
               key={expense.description}
               description={expense.description}
@@ -61,17 +61,20 @@ const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
             extraClass="aliquot"
           />
         </div>
-        {receiptInfo.debt && receiptInfo.penalty && (
+        {receiptInfo.apartment.debt && (
           <div className={styles["DetailedInfo-separator"]}>
-            <ExpenseItem description="Deuda" amount={receiptInfo.debt} />
-            <ExpenseItem description="Penalidad" amount={receiptInfo.penalty} />
+            <ExpenseItem
+              description="Deuda"
+              amount={receiptInfo.apartment.debt}
+            />
+            {/* <ExpenseItem description="Penalidad" amount={receiptInfo.penalty} /> */}
           </div>
         )}
         <div className={styles["DetailedInfo-separator"]}>
           <ExpenseItem
             extraClass="total"
             description="Total a pagar"
-            amount={receiptInfo.owedAmount}
+            amount={aliquot}
           />
         </div>
       </div>

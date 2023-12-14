@@ -1,13 +1,30 @@
+import { ApartmentType } from "./apartmentTypes";
+import { TransactionWithId } from "./transactionsTypes";
+// export interface ReceiptDetailedInfoType {
+//   property: string;
+//   owner: string;
+//   billedMonth: string;
+//   year: number;
+//   aliquot: number;
+//   owedAmount: number;
+//   expenses: ExpensesType[];
+//   debt?: number;
+//   penalty?: number;
+// }
+
 export interface ReceiptDetailedInfoType {
-  property: string;
-  owner: string;
-  billedMonth: string;
-  year: number;
-  aliquot: number;
-  owedAmount: number;
-  expenses: ExpensesType[];
-  debt?: number;
-  penalty?: number;
+  id: number;
+  createdAt: string;
+  periodId: number;
+  apartmentId: number;
+  period: {
+    id: number;
+    month: number;
+    year: number;
+    createdAt: string;
+    commonExpenses: TransactionWithId[];
+  };
+  apartment: ApartmentType;
 }
 
 export interface ExpensesType {

@@ -61,9 +61,9 @@ export default function ReceiptPage() {
       <AuthorizationContainer>
         <Header />
         <main className={styles["main-container"]}>
-          <h2>Apartamento {receiptInfo?.property}</h2>
+          <h2>Apartamento {receiptInfo?.apartment.apartmentNumber}</h2>
           <ReceiptGeneralInfo receiptInfo={receiptInfo} />
-          <ReceiptDetailedInfo receiptInfo={receiptInfo} />
+          {<ReceiptDetailedInfo receiptInfo={receiptInfo} />}
         </main>
       </AuthorizationContainer>
     </>

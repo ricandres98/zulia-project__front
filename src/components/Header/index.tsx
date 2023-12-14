@@ -57,14 +57,14 @@ const Header = ({ className }: PropTypes) => {
   );
 };
 
-type linkType = {
+export type linkType = {
   name: string;
   linkTo: string;
   withIcon?: boolean;
   icon?: React.JSX.Element;
 };
 
-type linkList = linkType[];
+export type linkList = linkType[];
 
 type NavBarMobileProps = {
   linkList: linkList;

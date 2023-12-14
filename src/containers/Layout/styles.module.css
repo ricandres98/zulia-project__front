@@ -1,0 +1,23 @@
+.main-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 20px;
+    color: var(--black);
+}
+
+.main-container h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+@media (min-width: 900px) {
+    .main-container {
+        padding: 32px 20px;
+    }
+    
+    .main-container h2 {
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+    }
+}

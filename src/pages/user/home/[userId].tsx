@@ -3,27 +3,27 @@ import { Header } from "../../../components/Header";
 import { ReceiptsTable } from "../../../components/ReceiptsTable";
 import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
 import { FullScreenLoader } from "../../../components/FullScreenLoader";
-import { UserTypeWithId } from "../../../types/userTypes";
 import { useRouter } from "next/router";
 import { fetchFunc } from "../../../utils/fetchFunc";
 import { ErrorScreen } from "../../../components/ErrorScreen";
 import styles from "../../../styles/Home.module.css";
+import { ApartmentType } from "../../../types/apartmentTypes";
 
 export default function Home() {
-  const [user, setUser] = useState<UserTypeWithId>();
+  const [apartment, setApartment] = useState<ApartmentType>();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const { getUserById } = fetchFunc();
+    const { getApartmentById } = fetchFunc();
     if (router.isReady) {
       const { userId } = router.query;
       (async () => {
-        const [err, data] = await getUserById(userId as string);
+        const [err, data] = await getApartmentById(userId as string);
         setLoading(false);
         if (!err) {
-          setUser(data);
+          setApartment(data);
         } else {
           setError(true);
           console.error(err);
@@ -41,7 +41,7 @@ export default function Home() {
           <ErrorScreen />
         ) : (
           <main className={styles["main-container"]}>
-            <h2>Apartamento {user?.apartment}</h2>
+            <h2>Apartamento {apartment?.apartmentNumber}</h2>
             <ReceiptsTable />
           </main>
         )}

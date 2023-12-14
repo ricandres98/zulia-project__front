@@ -1,0 +1,26 @@
+.nav-list {
+    display: grid;
+    gap: 20px;
+}
+
+.nav-list li {
+    font-size: 1.6rem;
+    background-color: var(--box-white);
+    color: var(--black-blue);
+    border: 1px solid var(--gray);
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-list a {
+    display: block;
+    width: 100%;
+    padding: 15px;
+}
+
+@media (min-width: 900px) {
+    .nav-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -7,7 +7,7 @@ import { authContext } from "../../hooks/useAuth";
 
 const Login = () => {
   const router = useRouter();
-  const { isAuth, firstLoad, setFirstLoad } = useContext(authContext);
+  const { isAuth } = useContext(authContext);
 
   // if user is authenticated login page is blocked
   // and redirects to home.
@@ -18,11 +18,6 @@ const Login = () => {
       }
     }
   }, [router, isAuth]);
-
-  // Activates the loader for each new login
-  if (!firstLoad) {
-    setFirstLoad(true);
-  }
 
   return (
     <div className={styles["super-grid"]}>

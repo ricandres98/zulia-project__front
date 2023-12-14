@@ -1,21 +1,30 @@
-import React, { FormEventHandler, useContext } from "react";
+import React, { FormEventHandler, useContext, useRef } from "react";
 import styles from "./styles.module.css";
 import { authContext } from "../../hooks/useAuth";
 import { useRouter } from "next/router";
 
 const LoginForm = () => {
-  const { login } = useContext(authContext);
+  const { login, setAdmin } = useContext(authContext);
   const router = useRouter();
+
+  const form = useRef<HTMLFormElement>(null);
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    login();
-    router.push("/");
+    if (form.current !== null) {
+      const formData = new FormData(form.current);
+      const isAdmin = formData.get("admin");
+
+      isAdmin && setAdmin(true);
+      login();
+      router.push(isAdmin ? "/admin/home/1" : "/user/home/1");
+    }
   };
 
   return (
     <>
       <form
+        ref={form}
         onSubmit={(e) => handleSubmit(e)}
         className={styles["form-container"]}
       >
