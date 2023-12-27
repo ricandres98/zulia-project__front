@@ -6,18 +6,17 @@ import { UserInfoContainer } from "../../../containers/UserInfoContainer";
 import { UserData } from "../../../types/userTypes";
 import { useRouter } from "next/router";
 import styles from "./styles.module.css";
-import { fetchFunc } from "../../../utils/fetchFunc";
+import { api } from "../../../utils/fetchFunc";
 
 const UserPage = () => {
   const [userInfo, setUserInfo] = useState<UserData[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    const { getUserById } = fetchFunc();
     (async () => {
       if (router.isReady) {
         const { id } = router.query;
-        const [err, data] = await getUserById(id as string);
+        const [err, data] = await api.apartments.getApartmentById(id as string);
         if (!err) {
           setUserInfo(formatUserInfo(data));
         } else {

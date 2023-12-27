@@ -1,12 +1,20 @@
 import React, { PropsWithChildren, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
+import { api } from "../utils/fetchFunc";
+import { LoginResponseType } from "../types/remoteTypes";
+
+export interface LoginBody {
+  email: string;
+  password: string;
+}
 
 interface initialValueType {
   isAuth: boolean | unknown;
   isAdmin: boolean;
   // eslint-disable-next-line no-unused-vars
   setAdmin: (value: boolean) => void;
-  login: () => void;
+  // eslint-disable-next-line no-unused-vars
+  login: (body: LoginBody) => Promise<[Error | null, LoginResponseType | null]>;
   logout: () => void;
   firstLoad: boolean;
   setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,7 +24,10 @@ const authContext = React.createContext<initialValueType>({
   isAuth: false,
   isAdmin: false,
   setAdmin: () => {},
-  login: () => {},
+  // eslint-disable-next-line no-unused-vars
+  login: async (body: LoginBody) => {
+    return [null, null];
+  },
   logout: () => {},
   firstLoad: true,
   setFirstLoad: () => {},
@@ -30,8 +41,22 @@ const useAuth = () => {
   const [firstLoad, setFirstLoad] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const login = () => {
-    setIsAuth(true);
+  const login = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Promise<[Error | null, LoginResponseType | null]> => {
+    try {
+      const res = await api.auth.login({ email, password });
+      const data: LoginResponseType = await res.json();
+
+      setIsAuth(true);
+      return [null, data];
+    } catch (err) {
+      return [err as Error, null];
+    }
   };
 
   const logout = () => {

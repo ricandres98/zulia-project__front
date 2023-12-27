@@ -5,32 +5,8 @@ import { ReceiptDetailedInfo } from "../../../components/ReceiptDetailedInfo";
 import { ReceiptDetailedInfoType } from "../../../types/receiptTypes";
 import styles from "./styles.module.css";
 import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
-import { fetchFunc } from "../../../utils/fetchFunc";
+import { api } from "../../../utils/fetchFunc";
 import { useRouter } from "next/router";
-
-// const receiptInfo: ReceiptInfo = {
-//   property: "A9",
-//   owner: "Ricardo Ojeda",
-//   billedMonth: "mayo",
-//   year: 2023,
-//   aliquot: 3.7643,
-//   owedAmount: 217.28,
-//   expenses: [
-//     {
-//       description:
-//         "Previsión bono alimenticio trabajador residencial según decreto",
-//       amount: 1000,
-//     },
-//     {
-//       description: "CANTV Conserjería",
-//       amount: 126.34,
-//     },
-//     {
-//       description: "Hidrocapital junio",
-//       amount: 2116.32,
-//     },
-//   ],
-// };
 
 export default function ReceiptPage() {
   const [receiptInfo, setReceiptInfo] = React.useState<
@@ -38,12 +14,16 @@ export default function ReceiptPage() {
   >(undefined);
 
   const router = useRouter();
+  // const { getReceiptInfo } = api.receipts.getReceiptInfo;
 
   useEffect(() => {
-    const { getReceiptInfo } = fetchFunc();
+    // const { getReceiptInfo } = fetchFunc();
+
     const fetchData = async () => {
       const { id } = router.query;
-      const [err, data] = await getReceiptInfo(parseInt(id as string));
+      const [err, data] = await api.receipts.getReceiptInfo(
+        parseInt(id as string),
+      );
       if (!err) {
         setReceiptInfo(data);
       } else {

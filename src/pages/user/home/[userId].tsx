@@ -4,7 +4,7 @@ import { ReceiptsTable } from "../../../components/ReceiptsTable";
 import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
 import { FullScreenLoader } from "../../../components/FullScreenLoader";
 import { useRouter } from "next/router";
-import { fetchFunc } from "../../../utils/fetchFunc";
+import { api } from "../../../utils/fetchFunc";
 import { ErrorScreen } from "../../../components/ErrorScreen";
 import styles from "../../../styles/Home.module.css";
 import { ApartmentType } from "../../../types/apartmentTypes";
@@ -16,11 +16,12 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const { getApartmentById } = fetchFunc();
     if (router.isReady) {
       const { userId } = router.query;
       (async () => {
-        const [err, data] = await getApartmentById(userId as string);
+        const [err, data] = await api.apartments.getApartmentById(
+          userId as string,
+        );
         setLoading(false);
         if (!err) {
           setApartment(data);
