@@ -10,6 +10,7 @@ export interface LoginBody {
 
 interface initialValueType {
   isAuth: boolean | unknown;
+  userToken: string | unknown;
   isAdmin: boolean;
   // eslint-disable-next-line no-unused-vars
   setAdmin: (value: boolean) => void;
@@ -23,6 +24,7 @@ interface initialValueType {
 const authContext = React.createContext<initialValueType>({
   isAuth: false,
   isAdmin: false,
+  userToken: null,
   setAdmin: () => {},
   // eslint-disable-next-line no-unused-vars
   login: async (body: LoginBody) => {
@@ -36,6 +38,10 @@ const authContext = React.createContext<initialValueType>({
 const useAuth = () => {
   const { item: isAuth, saveItem: setIsAuth } = useLocalStorage(
     "ZuliaUser_V1",
+    false,
+  );
+  const { item: userToken, saveItem: setUserToken } = useLocalStorage(
+    "ZuliaUser_V1_Token",
     false,
   );
   const [firstLoad, setFirstLoad] = useState(true);
@@ -52,6 +58,7 @@ const useAuth = () => {
       const res = await api.auth.login({ email, password });
       const data: LoginResponseType = await res.json();
 
+      setUserToken(data.token);
       setIsAuth(true);
       return [null, data];
     } catch (err) {
@@ -62,13 +69,24 @@ const useAuth = () => {
   const logout = () => {
     setIsAuth(false);
     setIsAdmin(false);
+    setUserToken(null);
   };
 
   const setAdmin = (value: boolean) => {
     setIsAdmin(value);
   };
 
-  return { isAuth, login, logout, firstLoad, setFirstLoad, isAdmin, setAdmin };
+  return {
+    isAuth,
+    login,
+    logout,
+    firstLoad,
+    setFirstLoad,
+    isAdmin,
+    setAdmin,
+    userToken,
+    setUserToken,
+  };
 };
 
 const AuthProvider = ({ children }: PropsWithChildren) => {

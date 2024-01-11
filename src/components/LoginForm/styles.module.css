@@ -66,3 +66,22 @@
 .form-container button:active {
     opacity: 0.8;
 }
+
+.form-container .unauthorized-message {
+    margin-bottom: 16px;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--negative-red-2);
+    color: var(--negative-red-1);
+    border-radius: 5px;
+}
+
+.form-container .loading-message {
+    margin-bottom: 16px;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 10px;
+    color: var(--green);
+    border-radius: 5px;
+}

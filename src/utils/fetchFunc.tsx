@@ -14,9 +14,13 @@ const api = {
       }
     },
 
-    getReceiptsList: async () => {
+    getReceiptsList: async (token: string) => {
       try {
-        const res = await fetch(`${API_URL}/api/v1/receipts`);
+        const res = await fetch(`${API_URL}/api/v1/receipts`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await res.json();
         return [null, data];
       } catch (err) {
@@ -49,9 +53,13 @@ const api = {
   },
 
   apartments: {
-    getApartmentById: async (id: string) => {
+    getApartmentById: async (id: string, token: string) => {
       try {
-        const res = await fetch(`${API_URL}/api/v1/apartments/${id}`);
+        const res = await fetch(`${API_URL}/api/v1/apartments/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await res.json();
         return [null, data];
       } catch (err) {

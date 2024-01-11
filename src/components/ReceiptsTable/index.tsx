@@ -1,17 +1,20 @@
 import Link from "next/link";
 import styles from "./styles.module.css";
-import { useFetch } from "../../hooks/useFetch";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ReceiptGeneralInfoType } from "../../types/receiptTypes";
 import { formatDate } from "../../utils/formatDate";
+import { authContext } from "../../hooks/useAuth";
+import { api } from "../../utils/fetchFunc";
 
 const ReceiptsTable = () => {
+  const { userToken } = useContext(authContext);
   const [receipts, setReceipts] = useState<ReceiptGeneralInfoType[]>([]);
-  const { getReceiptsList } = useFetch();
 
   useEffect(() => {
     (async () => {
-      const [err, data] = await getReceiptsList();
+      const [err, data] = await api.receipts.getReceiptsList(
+        userToken as string,
+      );
       if (!err) {
         setReceipts(data);
       } else {

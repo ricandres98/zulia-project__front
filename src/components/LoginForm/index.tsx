@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 const LoginForm = () => {
   const { login, setAdmin } = useContext(authContext);
   const [unauthorized, setUnauthorized] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const form = useRef<HTMLFormElement>(null);
@@ -15,17 +16,20 @@ const LoginForm = () => {
     if (form.current !== null) {
       const formData = new FormData(form.current);
       const isAdmin = formData.get("admin");
-
       const email = formData.get("email");
       const password = formData.get("password");
 
       if (email && password) {
+        setLoading(true);
+        setUnauthorized(false);
         const body = {
           email,
           password,
         };
         isAdmin && setAdmin(true);
         const [error, data] = await login(body as LoginBody);
+        setLoading(false);
+
         if (error) {
           setUnauthorized(true);
         } else if (data) {
@@ -53,7 +57,13 @@ const LoginForm = () => {
           <span>Ingresar como administrador</span>
         </label>
 
-        {unauthorized && <p>Email o contraseña incorrectos</p>}
+        {unauthorized && (
+          <p className={styles["unauthorized-message"]}>
+            Email o contraseña incorrectos
+          </p>
+        )}
+
+        {loading && <p className={styles["loading-message"]}>Cargando...</p>}
 
         <button>Ingresar</button>
       </form>
