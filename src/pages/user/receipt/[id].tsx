@@ -7,11 +7,16 @@ import styles from "./styles.module.css";
 import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
 import { api } from "../../../utils/fetchFunc";
 import { useRouter } from "next/router";
+import { authContext } from "../../../hooks/useAuth";
 
 export default function ReceiptPage() {
   const [receiptInfo, setReceiptInfo] = React.useState<
     ReceiptDetailedInfoType | undefined
   >(undefined);
+  const [error, setError] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+
+  const { userToken } = React.useContext(authContext);
 
   const router = useRouter();
   // const { getReceiptInfo } = api.receipts.getReceiptInfo;
@@ -23,10 +28,13 @@ export default function ReceiptPage() {
       const { id } = router.query;
       const [err, data] = await api.receipts.getReceiptInfo(
         parseInt(id as string),
+        userToken as string,
       );
+      setLoading(false);
       if (!err) {
         setReceiptInfo(data);
       } else {
+        setError(true);
         console.error(err);
       }
     };
@@ -34,7 +42,7 @@ export default function ReceiptPage() {
     if (router.isReady) {
       fetchData();
     }
-  }, [router]);
+  }, [router, userToken]);
 
   return (
     <>
@@ -42,8 +50,16 @@ export default function ReceiptPage() {
         <Header />
         <main className={styles["main-container"]}>
           <h2>Apartamento {receiptInfo?.apartment.apartmentNumber}</h2>
-          <ReceiptGeneralInfo receiptInfo={receiptInfo} />
-          {<ReceiptDetailedInfo receiptInfo={receiptInfo} />}
+          <ReceiptGeneralInfo
+            receiptInfo={receiptInfo}
+            loading={loading}
+            error={error}
+          />
+          <ReceiptDetailedInfo
+            receiptInfo={receiptInfo}
+            loading={loading}
+            error={error}
+          />
         </main>
       </AuthorizationContainer>
     </>

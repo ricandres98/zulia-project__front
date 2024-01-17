@@ -11,10 +11,10 @@ export default function Home() {
       if (!isAuth) {
         router.push("/login");
       } else {
-        router.push(isAdmin ? "admin/home/1" : "user/home/1");
+        router.push(isAdmin ? "admin/home/" : "user/home/");
       }
     }
-  }, [router, isAuth]);
+  }, [router, isAuth, isAdmin]);
 
   return <></>;
 }

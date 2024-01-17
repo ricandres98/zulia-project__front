@@ -33,7 +33,7 @@ const LoginForm = () => {
         if (error) {
           setUnauthorized(true);
         } else if (data) {
-          router.push(isAdmin ? "/admin/home/1" : "/user/home/1");
+          router.push(isAdmin ? "/admin/home/" : "/user/home/");
         }
       }
     }

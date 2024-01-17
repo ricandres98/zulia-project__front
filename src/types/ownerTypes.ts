@@ -7,3 +7,6 @@ export interface OwnerType {
   personId: number;
   createdAt: string;
 }
+
+export interface UpdateOwnerDto
+  extends Partial<Omit<OwnerType, "id" | "createdAt">> {}

@@ -1,12 +1,18 @@
+import { ApartmentType } from "../types/apartmentTypes";
+import { UpdateOwnerDto } from "../types/ownerTypes";
 import { config } from "./config";
 
 const API_URL = config.apiUrl;
 
 const api = {
   receipts: {
-    getReceiptInfo: async (id: number) => {
+    getReceiptInfo: async (id: number, token: string) => {
       try {
-        const res = await fetch(`${API_URL}/api/v1/receipts/${id}`);
+        const res = await fetch(`${API_URL}/api/v1/receipts/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await res.json();
         return [null, data];
       } catch (err) {
@@ -52,6 +58,30 @@ const api = {
     },
   },
 
+  owners: {
+    updateOwner: async (id: number, body: UpdateOwnerDto, token: string) => {
+      try {
+        const res = await fetch(`${API_URL}/api/v1/owners/${id}`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers":
+              "Origin, X-Requested-With, Content-Type, Accept, Z-Key",
+            "Access-Control-Allow-Methods":
+              "GET, HEAD, POST, PUT, DELETE, OPTIONS",
+          },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        return [null, data];
+      } catch (error) {
+        return [error, null];
+      }
+    },
+  },
+
   apartments: {
     getApartmentById: async (id: string, token: string) => {
       try {
@@ -66,9 +96,23 @@ const api = {
         return [err, null];
       }
     },
+    getApartmentByToken: async (token: string) => {
+      try {
+        const res = await fetch(`${API_URL}/api/v1/apartments/by-token`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data: ApartmentType = await res.json();
+        return [null, data];
+      } catch (err) {
+        return [err, null];
+      }
+    },
   },
 };
 
+export { api };
 // const fetchFunc = () => {
 //   const getReceiptInfo = async (id: number) => {
 //     try {
@@ -117,5 +161,3 @@ const api = {
 //     getTransactionsList,
 //   };
 // };
-
-export { api };

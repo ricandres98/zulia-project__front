@@ -6,16 +6,16 @@ import styles from "./styles.module.css";
 
 interface PropTypes {
   receiptInfo: ReceiptDetailedInfoType | undefined;
+  loading: boolean;
+  error: boolean;
 }
 
-const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
-  if (typeof receiptInfo === "undefined") {
-    return (
-      <>
-        <p>Ha habido un problema al cargar la información</p>
-      </>
-    );
-  } else {
+const ReceiptDetailedInfo = ({ receiptInfo, loading, error }: PropTypes) => {
+  if (loading) {
+    return <p>Cargando...</p>;
+  } else if (error) {
+    return <p>Al parecer ha habido un error</p>;
+  } else if (receiptInfo) {
     const subtotal: number = receiptInfo.period.commonExpenses
       .map((expense: ExpensesType) => expense.amount)
       .reduce((prev: number, curr: number) => prev + curr, 0);
