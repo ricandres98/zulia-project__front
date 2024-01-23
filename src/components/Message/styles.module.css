@@ -1,0 +1,9 @@
+.message {
+    margin-bottom: 16px;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--light-blue);
+    color: var(--dark-blue-1);
+    border-radius: 5px;
+}

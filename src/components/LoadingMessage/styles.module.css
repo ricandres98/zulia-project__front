@@ -1,0 +1,14 @@
+.loading-message {
+    margin-bottom: 16px;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 10px;
+    color: var(--green);
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 900px) {
+    .loading-message {
+        font-size: 1.6rem;
+    }
+}

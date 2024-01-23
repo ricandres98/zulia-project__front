@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { Header } from "../../../components/Header";
 import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
-import { fetchFunc } from "../../../utils/fetchFunc";
-import { TransactionWithId } from "../../../types/transactionsTypes";
+import { api } from "../../../utils/fetchFunc";
+import type { TransactionWithId } from "../../../types/transactionsTypes";
 import { Layout } from "../../../containers/Layout";
 import styles from "./styles.module.css";
 
-const ExpensesPage = () => {
+const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionWithId[]>([]);
 
   useEffect(() => {
-    const { getTransactionsList } = fetchFunc();
+    // const { getTransactionsList } = fetchFunc();
     (async () => {
-      const [error, data] = await getTransactionsList();
+      const [error, data] = await api.transactions.getTransactionsList();
 
       if (error) {
         console.error(error);
@@ -28,7 +28,7 @@ const ExpensesPage = () => {
       <AuthorizationContainer>
         <Header />
         <Layout>
-          <h2>Transactions</h2>
+          <h2>Transacciones</h2>
           <table className={styles["transactions-table"]}>
             <tr>
               <th>fecha</th>
@@ -55,4 +55,4 @@ const ExpensesPage = () => {
   );
 };
 
-export default ExpensesPage;
+export default TransactionsPage;

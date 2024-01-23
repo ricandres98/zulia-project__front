@@ -1,5 +1,7 @@
 import { ApartmentType } from "../types/apartmentTypes";
 import { UpdateOwnerDto } from "../types/ownerTypes";
+import { Period } from "../types/periodsTypes";
+import { CreateTransactionDto } from "../types/transactionsTypes";
 import { config } from "./config";
 
 const API_URL = config.apiUrl;
@@ -104,6 +106,58 @@ const api = {
           },
         });
         const data: ApartmentType = await res.json();
+        return [null, data];
+      } catch (err) {
+        return [err, null];
+      }
+    },
+  },
+
+  transactions: {
+    getTransactionsList: async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/v1/transactions`);
+        const data = await res.json();
+        return [null, data];
+      } catch (error) {
+        return [error, null];
+      }
+    },
+
+    createNewTransaction: async (body: CreateTransactionDto, token: string) => {
+      try {
+        const res = await fetch(`${API_URL}/api/v1/transactions`, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers":
+              "Origin, X-Requested-With, Content-Type, Accept, Z-Key",
+            "Access-Control-Allow-Methods":
+              "GET, HEAD, POST, PUT, DELETE, OPTIONS",
+          },
+        });
+
+        // Analiza el código de estado de la respuesta antes de enviar
+        const data = await res.json();
+        if (res.status === 200) {
+          return [null, data];
+        } else {
+          return [data, null];
+        }
+      } catch (error) {
+        return [error, null];
+      }
+    },
+  },
+
+  periods: {
+    getPeriods: async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/v1/periods/`);
+        const data: Period[] = await res.json();
         return [null, data];
       } catch (err) {
         return [err, null];

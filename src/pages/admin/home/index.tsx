@@ -29,8 +29,12 @@ const navItems: linkList = [
     linkTo: "/admin/apartment",
   },
   {
+    name: "Ver historial de movimientos",
+    linkTo: "/admin/transactions",
+  },
+  {
     name: "Agregar un gasto",
-    linkTo: "/admin/expenses",
+    linkTo: "/admin/transactions/new-transaction",
   },
   {
     name: "Crear nuevo recibo",

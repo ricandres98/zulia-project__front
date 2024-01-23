@@ -2,6 +2,8 @@ import React, { FormEventHandler, useContext, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import { LoginBody, authContext } from "../../hooks/useAuth";
 import { useRouter } from "next/router";
+import { LoadingMessage } from "../LoadingMessage";
+import { ErrorMessage } from "../ErrorMessage";
 
 const LoginForm = () => {
   const { login, setAdmin } = useContext(authContext);
@@ -58,12 +60,10 @@ const LoginForm = () => {
         </label>
 
         {unauthorized && (
-          <p className={styles["unauthorized-message"]}>
-            Email o contraseña incorrectos
-          </p>
+          <ErrorMessage>Email o contraseña incorrectos</ErrorMessage>
         )}
 
-        {loading && <p className={styles["loading-message"]}>Cargando...</p>}
+        {loading && <LoadingMessage />}
 
         <button>Ingresar</button>
       </form>
