@@ -12,12 +12,8 @@
     
 }
 
-.transactions-table td, .transactions-table th {
+.transactions-table th {
     padding: 5px;
     /* border: 3px solid var(--background-white); */
     font-size: 1.4rem;
-}
-
-.transactions-table th {
-    
 }

@@ -5,6 +5,7 @@ import { api } from "../../../utils/fetchFunc";
 import type { TransactionWithId } from "../../../types/transactionsTypes";
 import { Layout } from "../../../containers/Layout";
 import styles from "./styles.module.css";
+import { TransactionRow } from "../../../components/TransactionRow";
 
 const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionWithId[]>([]);
@@ -17,6 +18,13 @@ const TransactionsPage = () => {
       if (error) {
         console.error(error);
       } else {
+        data.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+
+          return dateA.getTime() - dateB.getTime();
+        });
+
         setTransactions(data);
         console.log(data);
       }
@@ -26,7 +34,7 @@ const TransactionsPage = () => {
   return (
     <>
       <AuthorizationContainer>
-        <Header />
+        <Header isAdmin={true} />
         <Layout>
           <h2>Transacciones</h2>
           <table className={styles["transactions-table"]}>
@@ -37,16 +45,10 @@ const TransactionsPage = () => {
               <th>referencia</th>
             </tr>
             {transactions?.map((transaction) => (
-              <tr key={transaction.reference}>
-                <td>
-                  {`${new Date(transaction.date).getDate()}/${
-                    new Date(transaction.date).getMonth() + 1
-                  }/${new Date(transaction.date).getFullYear()}`}
-                </td>
-                <td>{transaction.description}</td>
-                <td>{transaction.amount.toFixed(2)}</td>
-                <td>{transaction.reference}</td>
-              </tr>
+              <TransactionRow
+                key={transaction.reference}
+                transaction={transaction}
+              />
             ))}
           </table>
         </Layout>

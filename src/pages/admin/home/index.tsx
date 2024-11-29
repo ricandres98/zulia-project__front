@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Header, linkList } from "../../../components/Header";
+import { Header, LinkList } from "../../../components/Header";
 import { AuthorizationContainer } from "../../../containers/AuthorizationContainer";
 import { Layout } from "../../../containers/Layout";
 import styles from "./styles.module.css";
@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <AuthorizationContainer>
-        <Header />
+        <Header isAdmin={true} />
         <Layout>
           <ul className={styles["nav-list"]}>
             {navItems.map((item) => (
@@ -23,7 +23,7 @@ const Home = () => {
   );
 };
 
-const navItems: linkList = [
+const navItems: LinkList = [
   {
     name: "Consulta por apartamento",
     linkTo: "/admin/apartment",

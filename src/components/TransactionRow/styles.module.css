@@ -1,0 +1,35 @@
+tr.TransactionRow {
+    height: 46px;
+    border-bottom: 1px solid var(--gray);
+}
+
+.TransactionRow td {
+    padding: 5px;
+    /* border: 3px solid var(--background-white); */
+    font-size: 1.4rem;
+    width: 25%;
+}
+.TransactionRow td:first-of-type {
+    width: 150px;
+}
+.TransactionRow td:last-of-type {
+    width: 150px;
+}
+
+.TransactionRow td input {
+    /* margin-bottom: 16px; */
+    padding: 5px;
+    /* height: 50px; */
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    font-size: 1.4rem;
+    font-family: var(--font);
+}
+
+.TransactionRow td button {
+    background-color: unset;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}

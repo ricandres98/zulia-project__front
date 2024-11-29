@@ -8,12 +8,15 @@ import { authContext } from "../../hooks/useAuth";
 import styles from "./styles.module.css";
 
 interface PropTypes {
+  isAdmin?: boolean;
   className?: string;
 }
 
-const Header = ({ className }: PropTypes) => {
+const Header = ({ className, isAdmin }: PropTypes) => {
   const [openMenu, setOpenMenu] = useState(false);
   const { isAuth, logout } = useContext(authContext);
+
+  const navItems = isAdmin ? navItemsAdmin : navItemsUser;
 
   return (
     <>
@@ -25,24 +28,31 @@ const Header = ({ className }: PropTypes) => {
         </h1>
         {!!isAuth && (
           <>
-            <nav className={styles["navBar--desktop"]}>
-              <ul>
-                {navItems.map((item) => (
-                  <li key={item.linkTo}>
-                    <Link href={item.linkTo}>
-                      {item.withIcon ? item.icon : item.name}
-                    </Link>
+            {!isAdmin && (
+              <nav className={styles["navBar--desktop"]}>
+                <ul>
+                  {navItems.map((item) => (
+                    <li key={item.linkTo}>
+                      <Link href={item.linkTo}>
+                        {item.withIcon ? item.icon : item.name}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <button
+                      onClick={logout}
+                      className={styles["logout-button"]}
+                    >
+                      logout
+                    </button>
                   </li>
-                ))}
-                <li>
-                  <button onClick={logout} className={styles["logout-button"]}>
-                    logout
-                  </button>
-                </li>
-              </ul>
-            </nav>
+                </ul>
+              </nav>
+            )}
             <button
-              className={styles["menu-button"]}
+              className={`${styles["menu-button"]} ${
+                isAdmin ? styles.admin : null
+              }`}
               onClick={() => setOpenMenu(true)}
             >
               <BarsIcon />
@@ -50,31 +60,39 @@ const Header = ({ className }: PropTypes) => {
           </>
         )}
       </header>
-      {openMenu && (
-        <NavBarMobile linkList={navItems} close={() => setOpenMenu(false)} />
-      )}
+      {
+        /*openMenu && */
+        <NavBarMobile
+          linkList={navItems}
+          close={() => setOpenMenu(false)}
+          hidden={!openMenu}
+        />
+      }
     </>
   );
 };
 
-export type linkType = {
+export type LinkType = {
   name: string;
   linkTo: string;
   withIcon?: boolean;
   icon?: React.JSX.Element;
 };
 
-export type linkList = linkType[];
+export type LinkList = LinkType[];
 
 type NavBarMobileProps = {
-  linkList: linkList;
+  linkList: LinkList;
   close: () => void;
+  hidden: boolean;
 };
 
-const NavBarMobile = ({ linkList, close }: NavBarMobileProps) => {
+const NavBarMobile = ({ linkList, close, hidden }: NavBarMobileProps) => {
   const { logout } = useContext(authContext);
   return (
-    <nav className={styles["navBar--mobile"]}>
+    <nav
+      className={`${styles["navBar--mobile"]} ${hidden ? styles.hidden : null}`}
+    >
       <div className={`${styles.close} ${styles.row}`}>
         <button className={styles["close-button"]} onClick={close}>
           <XMarkIcon />
@@ -96,10 +114,10 @@ const NavBarMobile = ({ linkList, close }: NavBarMobileProps) => {
   );
 };
 
-const navItems: linkList = [
+const navItemsUser: LinkList = [
   {
     name: "notificar pago",
-    linkTo: "/notify-payment",
+    linkTo: "/user/notify-payment",
   },
   {
     name: "datos",
@@ -112,6 +130,25 @@ const navItems: linkList = [
     linkTo: "/notifications",
     withIcon: true,
     icon: <EnvelopeIcon color="#009993" />,
+  },
+];
+
+const navItemsAdmin: LinkList = [
+  {
+    name: "Consulta por apartamento",
+    linkTo: "/admin/apartment",
+  },
+  {
+    name: "Ver historial de movimientos",
+    linkTo: "/admin/transactions",
+  },
+  {
+    name: "Agregar un gasto",
+    linkTo: "/admin/transactions/new-transaction",
+  },
+  {
+    name: "Crear nuevo recibo",
+    linkTo: "/admin/receipts",
   },
 ];
 

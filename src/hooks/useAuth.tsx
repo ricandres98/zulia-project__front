@@ -11,7 +11,7 @@ export interface LoginBody {
 interface initialValueType {
   isAuth: boolean | unknown;
   userToken: string | unknown;
-  isAdmin: boolean;
+  isAdmin: boolean | unknown;
   // eslint-disable-next-line no-unused-vars
   setAdmin: (value: boolean) => void;
   // eslint-disable-next-line no-unused-vars
@@ -44,8 +44,12 @@ const useAuth = () => {
     "ZuliaUser_V1_Token",
     false,
   );
+  const { item: isAdmin, saveItem: setIsAdmin } = useLocalStorage(
+    "ZuliaUser_V1_isAdmin",
+    false,
+  );
+  // const [isAdmin, setIsAdmin] = useState(false);
   const [firstLoad, setFirstLoad] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const login = async ({
     email,

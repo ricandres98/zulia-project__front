@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.module.css";
 
 interface IconPropTypes {
-  color?: "green" | "white";
+  color?: "red" | "white";
 }
 
 const XMarkIcon = ({ color }: IconPropTypes) => {

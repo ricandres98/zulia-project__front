@@ -1,7 +1,12 @@
-import { ApartmentType } from "../types/apartmentTypes";
-import { UpdateOwnerDto } from "../types/ownerTypes";
-import { Period } from "../types/periodsTypes";
-import { CreateTransactionDto } from "../types/transactionsTypes";
+import type { ResponseTuple } from "../types/ApiTypes";
+import type { ApartmentType } from "../types/apartmentTypes";
+import type { UpdateOwnerDto } from "../types/ownerTypes";
+import type { Period } from "../types/periodsTypes";
+import { ReceiptGeneralInfoType } from "../types/receiptTypes";
+import type {
+  CreateTransactionDto,
+  TransactionWithId,
+} from "../types/transactionsTypes";
 import { config } from "./config";
 
 const API_URL = config.apiUrl;
@@ -22,7 +27,9 @@ const api = {
       }
     },
 
-    getReceiptsList: async (token: string) => {
+    getReceiptsList: async (
+      token: string,
+    ): Promise<ResponseTuple<ReceiptGeneralInfoType[]>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/receipts`, {
           headers: {
@@ -31,7 +38,7 @@ const api = {
         });
         const data = await res.json();
         return [null, data];
-      } catch (err) {
+      } catch (err: any) {
         return [err, null];
       }
     },
@@ -98,7 +105,9 @@ const api = {
         return [err, null];
       }
     },
-    getApartmentByToken: async (token: string) => {
+    getApartmentByToken: async (
+      token: string,
+    ): Promise<ResponseTuple<ApartmentType>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/apartments/by-token`, {
           headers: {
@@ -107,20 +116,22 @@ const api = {
         });
         const data: ApartmentType = await res.json();
         return [null, data];
-      } catch (err) {
+      } catch (err: any) {
         return [err, null];
       }
     },
   },
 
   transactions: {
-    getTransactionsList: async () => {
+    getTransactionsList: async (): Promise<
+      ResponseTuple<TransactionWithId[]>
+    > => {
       try {
         const res = await fetch(`${API_URL}/api/v1/transactions`);
-        const data = await res.json();
+        const data: TransactionWithId[] = await res.json();
         return [null, data];
       } catch (error) {
-        return [error, null];
+        return [error as Error, null];
       }
     },
 
@@ -154,13 +165,13 @@ const api = {
   },
 
   periods: {
-    getPeriods: async () => {
+    getPeriods: async (): Promise<ResponseTuple<Period[]>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/periods/`);
         const data: Period[] = await res.json();
         return [null, data];
       } catch (err) {
-        return [err, null];
+        return [err as Error, null];
       }
     },
   },

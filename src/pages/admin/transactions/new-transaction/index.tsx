@@ -96,7 +96,7 @@ const NewTransactionPage = (): React.JSX.Element => {
 
   return (
     <AuthorizationContainer>
-      <Header />
+      <Header isAdmin={true} />
       <Layout>
         <h2>Agregar nueva transacción</h2>
         <form
