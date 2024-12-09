@@ -26,7 +26,7 @@ const Home = () => {
 const navItems: LinkList = [
   {
     name: "Consulta por apartamento",
-    linkTo: "/admin/apartment",
+    linkTo: "/admin/apartments",
   },
   {
     name: "Ver historial de movimientos",

@@ -1,6 +1,6 @@
 import type { ResponseTuple } from "../types/ApiTypes";
 import type { ApartmentType } from "../types/apartmentTypes";
-import type { UpdateOwnerDto } from "../types/ownerTypes";
+import type { OwnerType, UpdateOwnerDto } from "../types/ownerTypes";
 import type { Period } from "../types/periodsTypes";
 import { ReceiptGeneralInfoType } from "../types/receiptTypes";
 import type {
@@ -68,7 +68,11 @@ const api = {
   },
 
   owners: {
-    updateOwner: async (id: number, body: UpdateOwnerDto, token: string) => {
+    updateOwner: async (
+      id: number,
+      body: UpdateOwnerDto,
+      token: string,
+    ): Promise<ResponseTuple<OwnerType>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/owners/${id}`, {
           method: "PATCH",
@@ -85,14 +89,17 @@ const api = {
         });
         const data = await res.json();
         return [null, data];
-      } catch (error) {
+      } catch (error: any) {
         return [error, null];
       }
     },
   },
 
   apartments: {
-    getApartmentById: async (id: string, token: string) => {
+    getApartmentById: async (
+      id: string,
+      token: string,
+    ): Promise<ResponseTuple<ApartmentType>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/apartments/${id}`, {
           headers: {
@@ -101,7 +108,7 @@ const api = {
         });
         const data = await res.json();
         return [null, data];
-      } catch (err) {
+      } catch (err: any) {
         return [err, null];
       }
     },

@@ -127,7 +127,7 @@ const navItemsUser: LinkList = [
   },
   {
     name: "notificaciones",
-    linkTo: "/notifications",
+    linkTo: "/",
     withIcon: true,
     icon: <EnvelopeIcon color="#009993" />,
   },

@@ -1,9 +1,9 @@
-.size {
+.size-32 {
     width: 32px;
     height: 32px;
     color: var(--white);
 }
-.small-pen {
+.small {
     width: 24px;
     height: 24px;
     color: var(--green);

@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import { CheckIcon } from "../../Icons/CheckIcon";
 import { XMarkIcon } from "../../Icons/XMarkIcon";
 import { PencilIcon } from "../../Icons/PencilIcon";
+import { TrashIcon } from "../../Icons/TrashIcon";
 
 type PropsType = {
   transaction: TransactionWithId;
@@ -83,7 +84,9 @@ export const TransactionRow = ({
               <button onClick={() => setEditing(true)}>
                 <PencilIcon />
               </button>
-              <button>Delete</button>
+              <button>
+                <TrashIcon color="red" />
+              </button>
             </>
           )}
         </td>

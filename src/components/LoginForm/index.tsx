@@ -4,6 +4,7 @@ import { LoginBody, authContext } from "../../hooks/useAuth";
 import { useRouter } from "next/router";
 import { LoadingMessage } from "../LoadingMessage";
 import { ErrorMessage } from "../ErrorMessage";
+import Link from "next/link";
 
 const LoginForm = () => {
   const { login, setAdmin } = useContext(authContext);
@@ -66,6 +67,11 @@ const LoginForm = () => {
         {loading && <LoadingMessage />}
 
         <button>Ingresar</button>
+
+        <div className={styles["form-links"]}>
+          <Link href={"/signup"}>Registrarse</Link>
+          <Link href={"/"}>Olvidé mi contraseña</Link>
+        </div>
       </form>
     </>
   );

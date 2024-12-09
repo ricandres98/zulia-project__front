@@ -1,0 +1,16 @@
+.main-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 32px;
+    padding: 20px;
+    color: var(--black);
+    /* border: solid 1px red; */
+    background-color: var(--box-white);
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+.main-container section {
+    border-bottom: 1px solid gray;
+    padding: 15px 0;
+}

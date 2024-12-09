@@ -11,7 +11,6 @@ const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionWithId[]>([]);
 
   useEffect(() => {
-    // const { getTransactionsList } = fetchFunc();
     (async () => {
       const [error, data] = await api.transactions.getTransactionsList();
 

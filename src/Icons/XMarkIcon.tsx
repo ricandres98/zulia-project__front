@@ -1,11 +1,8 @@
 import React from "react";
 import styles from "./styles.module.css";
+import { IconPropType } from "./IconTypes";
 
-interface IconPropTypes {
-  color?: "red" | "white";
-}
-
-const XMarkIcon = ({ color }: IconPropTypes) => {
+const XMarkIcon = ({ color }: IconPropType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +10,7 @@ const XMarkIcon = ({ color }: IconPropTypes) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`${styles.size} ${color && styles[color]}`}
+      className={`${styles["size-32"]} ${color && styles[color]}`}
     >
       <path
         strokeLinecap="round"

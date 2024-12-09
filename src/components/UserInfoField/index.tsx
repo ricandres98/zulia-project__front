@@ -7,7 +7,6 @@ import { CheckIcon } from "../../Icons/CheckIcon";
 import { api } from "../../utils/fetchFunc";
 import { authContext } from "../../hooks/useAuth";
 import { ApartmentType } from "../../types/apartmentTypes";
-import { OwnerType } from "../../types/ownerTypes";
 
 interface PropsType extends UserData {
   setUserInfo: React.Dispatch<React.SetStateAction<ApartmentType | null>>;
@@ -32,19 +31,22 @@ const UserInfoField = ({
       const body = {
         [name]: newData,
       };
-      const [error, owner] = await api.owners.updateOwner(
-        1,
-        body,
-        userToken as string,
-      );
-      if (!error) {
-        setUserInfo((prevValue) => {
-          return {
-            ...prevValue,
-            owner: owner as OwnerType,
-          };
-        });
-        setEditing(false);
+      if (newData) {
+        const [error, owner] = await api.owners.updateOwner(
+          /*Owner ID must be read dynamically */
+          1,
+          body,
+          userToken as string,
+        );
+        if (!error) {
+          setUserInfo((prevValue: ApartmentType | null): ApartmentType => {
+            return {
+              ...prevValue!,
+              owner: owner,
+            };
+          });
+          setEditing(false);
+        }
       }
     }
   };
