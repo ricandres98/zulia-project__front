@@ -1,17 +1,24 @@
-import React from "react";
+import React, { FormEventHandler } from "react";
+import styles from "./styles.module.css";
 
 type SignupEmailPswInputPropsType = {};
 
 const SignupEmailPswInput: React.FC<SignupEmailPswInputPropsType> = () => {
+  const handleSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
+  };
   return (
-    <section className="registry-step registry-step-3">
-      <label htmlFor="email">Introduzca su correo electrónico</label>
-      <input type="text" id="email" />
-      <label htmlFor="password">Introduzca una contraseña</label>
-      <input type="text" id="password" />
-      <label htmlFor="verify-password">Confirme su contraseña</label>
-      <input type="text" id="verify-password" />
-    </section>
+    <form onSubmit={handleSubmit} className={styles["registry-step-3"]}>
+      <div>
+        <label htmlFor="email">Introduzca su correo electrónico</label>
+        <input type="email" id="email" />
+        <label htmlFor="password">Introduzca una contraseña</label>
+        <input type="password" id="password" />
+        <label htmlFor="verify-password">Confirme su contraseña</label>
+        <input type="password" id="verify-password" />
+      </div>
+      <button>Next</button>
+    </form>
   );
 };
 
