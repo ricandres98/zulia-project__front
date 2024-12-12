@@ -10,3 +10,5 @@ export interface OwnerType {
 
 export interface UpdateOwnerDto
   extends Partial<Omit<OwnerType, "id" | "createdAt">> {}
+
+export interface CreateOwnerDto extends Omit<OwnerType, "id" | "createdAt"> {}

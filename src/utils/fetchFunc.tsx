@@ -28,7 +28,7 @@ const api = {
     },
 
     getReceiptsList: async (
-      token: string,
+      token: string
     ): Promise<ResponseTuple<ReceiptGeneralInfoType[]>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/receipts`, {
@@ -68,11 +68,43 @@ const api = {
   },
 
   owners: {
-    updateOwner: async (
+    async getOwnerByPersonId(
+      personId: string,
+    ): Promise<ResponseTuple<OwnerType>> {
+      try {
+        const res = await fetch(
+          `${API_URL}/api/v1/owners/by-personId/${personId}`,
+        );
+        const data = await res.json();
+        if (res.status != 200) {
+          return [data, null];
+        }
+        return [null, data];
+      } catch (err: any) {
+        return [err, null];
+      }
+    },
+
+    async checkOwnerExists(personId: string): Promise<ResponseTuple<boolean>> {
+      try {
+        const res = await fetch(
+          `${API_URL}/api/v1/owners/owner-exists/${personId}`,
+        );
+        const data = await res.json();
+        if (res.status != 200) {
+          return [data, null];
+        }
+        return [null, data];
+      } catch (err: any) {
+        return [err, null];
+      }
+    },
+
+    async updateOwner(
       id: number,
       body: UpdateOwnerDto,
-      token: string,
-    ): Promise<ResponseTuple<OwnerType>> => {
+      token: string
+    ): Promise<ResponseTuple<OwnerType>> {
       try {
         const res = await fetch(`${API_URL}/api/v1/owners/${id}`, {
           method: "PATCH",
@@ -98,7 +130,7 @@ const api = {
   apartments: {
     getApartmentById: async (
       id: string,
-      token: string,
+      token: string
     ): Promise<ResponseTuple<ApartmentType>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/apartments/${id}`, {
@@ -113,7 +145,7 @@ const api = {
       }
     },
     getApartmentByToken: async (
-      token: string,
+      token: string
     ): Promise<ResponseTuple<ApartmentType>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/apartments/by-token`, {

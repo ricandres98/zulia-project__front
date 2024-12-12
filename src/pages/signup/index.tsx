@@ -5,7 +5,6 @@ import { SignupApartmentInput } from "../../components/SignupApartmentInput";
 import { SignupEmailPswInput } from "../../components/SignupEmailPswInput";
 import { SignupOwnerDataInput } from "../../components/SignupOwnerDataInput";
 import styles from "./styles.module.css";
-
 function assignApartments(array: string[], letter: string) {
   for (let i = 1; i < 13; i++) {
     array.push(letter + i);
