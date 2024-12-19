@@ -1,7 +1,9 @@
-import React, { FormEventHandler, useState } from "react";
+import React, { FormEventHandler, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import { api } from "../../utils/fetchFunc";
 import { useSignUpInfo } from "../../hooks/useSignUpInfo";
+import { ErrorMessage } from "../ErrorMessage";
+import { LoadingMessage } from "../LoadingMessage";
 
 type SignupIDInputPropsType = {
   // eslint-disable-next-line no-unused-vars
@@ -9,39 +11,48 @@ type SignupIDInputPropsType = {
 };
 
 const SignupIDInput: React.FC<SignupIDInputPropsType> = ({ setStage }) => {
-  const [id, setId] = useState("");
+  // const [id, setId] = useState("");
   const [error, setError] = useState("");
-  const { ownerInfo, setOwnerInfo } = useSignUpInfo();
+  const [loading, setLoading] = useState(false);
+  const { ownerInfo, setOwnerInfoAndUpdateTime } = useSignUpInfo();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    if (id) {
-      const [reqError, itExists] = await api.owners.checkOwnerExists(id);
-      console.log([reqError, itExists]);
+    if (inputRef.current) {
+      const id = inputRef.current.value;
 
-      if (reqError) {
-        setError(reqError.message);
-      } else {
-        setError("");
-        if (itExists) {
-          console.log("Usuario existente");
-          const ownerInDB = await api.owners.getOwnerByPersonId(id);
-          console.log(ownerInDB);
-          setOwnerInfo({
-            ...ownerInfo,
-            firstName: ownerInDB[1]?.firstName,
-            middleName: ownerInDB[1]?.middleName,
-            lastName: ownerInDB[1]?.lastName,
-            secondLastName: ownerInDB[1]?.secondLastName,
-            personId: ownerInDB[1]?.personId,
-          });
+      if (id) {
+        setLoading(true);
+        const [reqError, itExists] = await api.owners.checkOwnerExists(id);
+        console.log([reqError, itExists]);
+
+        if (reqError) {
+          setLoading(false);
+          setError(reqError.message);
         } else {
-          console.log("Usuario no registrado. Ingrese datos");
-          setOwnerInfo({
-            personId: parseInt(id),
-          });
+          setError("");
+          if (itExists) {
+            console.log("Usuario existente");
+            const ownerInDB = await api.owners.getOwnerByPersonId(id);
+            console.log(ownerInDB);
+            setOwnerInfoAndUpdateTime({
+              ...ownerInfo,
+              firstName: ownerInDB[1]?.firstName,
+              middleName: ownerInDB[1]?.middleName,
+              lastName: ownerInDB[1]?.lastName,
+              secondLastName: ownerInDB[1]?.secondLastName,
+              personId: ownerInDB[1]?.personId,
+            });
+          } else {
+            console.log("Usuario no registrado. Ingrese datos");
+            setOwnerInfoAndUpdateTime({
+              personId: parseInt(id),
+            });
+          }
+          setLoading(false);
+          setStage();
         }
-        setStage();
       }
     }
   };
@@ -54,11 +65,14 @@ const SignupIDInput: React.FC<SignupIDInputPropsType> = ({ setStage }) => {
           type="number"
           name="owner_id"
           id="cedula"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
+          ref={inputRef}
+          // value={id}
+          // onChange={(e) => setId(e.target.value)}
+          defaultValue={ownerInfo?.personId}
         />
       </div>
-      {error && <p>Ha ocurrido un error</p>}
+      {loading && <LoadingMessage />}
+      {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
       <button>Next stage</button>
     </form>
   );

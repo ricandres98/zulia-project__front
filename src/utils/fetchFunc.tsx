@@ -145,7 +145,7 @@ const api = {
       }
     },
     getApartmentByToken: async (
-      token: string
+      token: string,
     ): Promise<ResponseTuple<ApartmentType>> => {
       try {
         const res = await fetch(`${API_URL}/api/v1/apartments/by-token`, {
