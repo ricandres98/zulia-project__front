@@ -19,15 +19,30 @@ const SignUpPage = () => {
   assignApartments(apartmentsArray, "A");
   assignApartments(apartmentsArray, "B");
 
+  console.log("current stage is:", stage);
+
   return (
     <>
       <Header />
       <main className={styles["main-container"]}>
         <h1>Registro</h1>
-        <SignupIDInput setStage={() => setStage(2)} />
-        {stage >= 2 && <SignupOwnerDataInput setStage={() => setStage(3)} />}
+        <SignupIDInput
+          stage={stage}
+          setStage={() => {
+            // This is meant to force the re-rendering of the next
+            // component each time the ID is set
+            setStage(0);
+            setTimeout(() => {
+              setStage(2);
+            }, 10);
+          }}
+        />
+        {stage >= 2 && (
+          <SignupOwnerDataInput stage={stage} setStage={() => setStage(3)} />
+        )}
         {stage >= 3 && (
           <SignupApartmentInput
+            stage={stage}
             apartmentsArray={apartmentsArray}
             setStage={() => setStage(4)}
           />

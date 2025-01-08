@@ -8,9 +8,13 @@ import { LoadingMessage } from "../LoadingMessage";
 type SignupIDInputPropsType = {
   // eslint-disable-next-line no-unused-vars
   setStage: () => void;
+  stage: number;
 };
 
-const SignupIDInput: React.FC<SignupIDInputPropsType> = ({ setStage }) => {
+const SignupIDInput: React.FC<SignupIDInputPropsType> = ({
+  setStage,
+  stage,
+}) => {
   // const [id, setId] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -47,6 +51,7 @@ const SignupIDInput: React.FC<SignupIDInputPropsType> = ({ setStage }) => {
           } else {
             console.log("Usuario no registrado. Ingrese datos");
             setOwnerInfoAndUpdateTime({
+              ...ownerInfo,
               personId: parseInt(id),
             });
           }
@@ -69,11 +74,12 @@ const SignupIDInput: React.FC<SignupIDInputPropsType> = ({ setStage }) => {
           // value={id}
           // onChange={(e) => setId(e.target.value)}
           defaultValue={ownerInfo?.personId}
+          disabled={stage !== 1}
         />
       </div>
       {loading && <LoadingMessage />}
       {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      <button>Next stage</button>
+      <button>Siguiente</button>
     </form>
   );
 };

@@ -3,3 +3,6 @@
 
 - Ajustar que la página principal contenga algún tipo de información en la url que permita
   solicitar la información del usuario por Id, sin exponer información sensible.
+
+- El componente de Sign up para los datos personales del usuario debe renderizarse 
+  nuevamente al momento de cambiar el número de identificación.

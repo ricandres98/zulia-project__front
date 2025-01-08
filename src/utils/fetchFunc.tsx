@@ -1,6 +1,10 @@
 import type { ResponseTuple } from "../types/ApiTypes";
 import type { ApartmentType } from "../types/apartmentTypes";
-import type { OwnerType, UpdateOwnerDto } from "../types/ownerTypes";
+import type {
+  CreateOwnerDto,
+  OwnerType,
+  UpdateOwnerDto,
+} from "../types/ownerTypes";
 import type { Period } from "../types/periodsTypes";
 import { ReceiptGeneralInfoType } from "../types/receiptTypes";
 import type {
@@ -73,7 +77,7 @@ const api = {
     ): Promise<ResponseTuple<OwnerType>> {
       try {
         const res = await fetch(
-          `${API_URL}/api/v1/owners/by-personId/${personId}`,
+          `${API_URL}/api/v1/owners/by-personId/${personId}`
         );
         const data = await res.json();
         if (res.status != 200) {
@@ -88,7 +92,7 @@ const api = {
     async checkOwnerExists(personId: string): Promise<ResponseTuple<boolean>> {
       try {
         const res = await fetch(
-          `${API_URL}/api/v1/owners/owner-exists/${personId}`,
+          `${API_URL}/api/v1/owners/owner-exists/${personId}`
         );
         const data = await res.json();
         if (res.status != 200) {
@@ -97,6 +101,31 @@ const api = {
         return [null, data];
       } catch (err: any) {
         return [err, null];
+      }
+    },
+
+    async createOwner(body: CreateOwnerDto): Promise<ResponseTuple<OwnerType>> {
+      try {
+        const res = await fetch(`${API_URL}/api/v1/owners`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers":
+              "Origin, X-Requested-With, Content-Type, Accept, Z-Key",
+            "Access-Control-Allow-Methods":
+              "GET, HEAD, POST, PUT, DELETE, OPTIONS",
+          },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (res.status !== 200) {
+          return [data, null];
+        } else {
+          return [null, data];
+        }
+      } catch (error: any) {
+        return [error, null];
       }
     },
 

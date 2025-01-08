@@ -5,6 +5,7 @@ type SignupApartmentInputPropsType = {
   // eslint-disable-next-line no-unused-vars
   setStage: () => void;
   apartmentsArray: string[];
+  stage: number;
 };
 
 const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({

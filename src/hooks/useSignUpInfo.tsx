@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { CreateOwnerDto } from "../types/ownerTypes";
 import { useLocalStorage } from "./useLocalStorage";
+import { SignUpInfoType } from "../types/signupTypes";
 
-interface CreateOwnerInLocalStorage extends Partial<CreateOwnerDto> {
+interface CreateOwnerInLocalStorage extends SignUpInfoType {
   lastUpdate?: number;
 }
 
@@ -13,7 +13,7 @@ function useSignUpInfo() {
       {},
     );
 
-  const setOwnerInfoAndUpdateTime = (ownerInfo: Partial<CreateOwnerDto>) => {
+  const setOwnerInfoAndUpdateTime = (ownerInfo: SignUpInfoType) => {
     setOwnerInfo({
       ...ownerInfo,
       lastUpdate: Date.now(),
@@ -21,7 +21,7 @@ function useSignUpInfo() {
   };
 
   useEffect(() => {
-    const TWO_MIN = 120000;
+    const ONE_MIN = 60000;
     const FIVE_MIN = 300000;
     const interval = setInterval(() => {
       if (ownerInfo.lastUpdate) {
@@ -31,7 +31,7 @@ function useSignUpInfo() {
           setOwnerInfo({});
         }
       }
-    }, TWO_MIN);
+    }, ONE_MIN);
 
     return () => {
       clearInterval(interval);
