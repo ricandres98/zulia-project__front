@@ -48,12 +48,22 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
       const lastName = formData.get("last-name");
       const secondLastName = formData.get("second-last-name");
 
-      const newOwnerInfo = {
+      let newOwnerInfo = {
         firstName: firstName as string,
-        middleName: middleName as string,
         lastName: lastName as string,
-        secondLastName: secondLastName as string,
       };
+
+      if (middleName) {
+        Object.defineProperty(newOwnerInfo, "middleName", {
+          value: middleName as string,
+        });
+      }
+
+      if (secondLastName) {
+        Object.defineProperty(newOwnerInfo, "secondLastName", {
+          value: secondLastName as string,
+        });
+      }
 
       console.log(newOwnerInfo);
 
@@ -75,6 +85,17 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
         } else if (ownerExists) {
           // If the owner already exists in the database just move on to next stage
           setStage();
+          const [err, data] = await api.owners.getOwnerByPersonId(
+            `${ownerInfo.personId}`,
+          );
+          if (err) {
+            throw err;
+          } else {
+            setOwnerInfoAndUpdateTime({
+              ...ownerInfo,
+              ownerId: data.id,
+            });
+          }
         } else {
           const [err, data] = await api.owners.createOwner(body);
           if (err) {
