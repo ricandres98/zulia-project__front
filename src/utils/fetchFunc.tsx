@@ -1,5 +1,8 @@
 import type { ResponseTuple } from "../types/ApiTypes";
-import type { ApartmentType } from "../types/apartmentTypes";
+import type {
+  ApartmentType,
+  createApartmentDto,
+} from "../types/apartmentTypes";
 import type {
   CreateOwnerDto,
   OwnerType,
@@ -73,7 +76,7 @@ const api = {
 
   owners: {
     async getOwnerByPersonId(
-      personId: string,
+      personId: string
     ): Promise<ResponseTuple<OwnerType>> {
       try {
         const res = await fetch(
@@ -157,10 +160,19 @@ const api = {
   },
 
   apartments: {
-    getApartmentById: async (
+    async getApartmentById(id: number): Promise<ApartmentType> {
+      const res = await fetch(`${API_URL}/api/v1/apartments/${id}`);
+      if (res.status !== 200) {
+        throw res.statusText;
+      }
+      const data = await res.json();
+      return data;
+    },
+
+    async getApartmentByIdToken(
       id: string,
-      token: string
-    ): Promise<ResponseTuple<ApartmentType>> => {
+      token: string,
+    ): Promise<ResponseTuple<ApartmentType>> {
       try {
         const res = await fetch(`${API_URL}/api/v1/apartments/${id}`, {
           headers: {
@@ -173,9 +185,10 @@ const api = {
         return [err, null];
       }
     },
-    getApartmentByToken: async (
-      token: string,
-    ): Promise<ResponseTuple<ApartmentType>> => {
+
+    async getApartmentByToken(
+      token: string
+    ): Promise<ResponseTuple<ApartmentType>> {
       try {
         const res = await fetch(`${API_URL}/api/v1/apartments/by-token`, {
           headers: {
@@ -187,6 +200,40 @@ const api = {
       } catch (err: any) {
         return [err, null];
       }
+    },
+
+    async createApartment(body: createApartmentDto): Promise<ApartmentType> {
+      const res = await fetch(`${API_URL}/api/v1/apartments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers":
+            "Origin, X-Requested-With, Content-Type, Accept, Z-Key",
+          "Access-Control-Allow-Methods":
+            "GET, HEAD, POST, PUT, DELETE, OPTIONS",
+        },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (res.status !== 200) {
+        throw res.statusText;
+      } else {
+        return data;
+      }
+    },
+
+    async checkApartmentExists(
+      apartmentNumber: string
+    ): Promise<false | number> {
+      const res = await fetch(
+        `${API_URL}/api/v1/apartments/apartment-exists/${apartmentNumber}`
+      );
+      const data = await res.json();
+      if (res.status != 200) {
+        throw res.statusText;
+      }
+      return data;
     },
   },
 

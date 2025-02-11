@@ -41,7 +41,6 @@ const SignupIDInput: React.FC<SignupIDInputPropsType> = ({
             const ownerInDB = await api.owners.getOwnerByPersonId(id);
             console.log(ownerInDB);
             setOwnerInfoAndUpdateTime({
-              ...ownerInfo,
               firstName: ownerInDB[1]?.firstName,
               middleName: ownerInDB[1]?.middleName,
               lastName: ownerInDB[1]?.lastName,

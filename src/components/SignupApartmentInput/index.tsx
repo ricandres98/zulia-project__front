@@ -2,6 +2,8 @@ import React, { FormEventHandler, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import { useSignUpInfo } from "../../hooks/useSignUpInfo";
 import { api } from "../../utils/fetchFunc";
+import { LoadingMessage } from "../LoadingMessage";
+import { ErrorMessage } from "../ErrorMessage";
 
 type SignupApartmentInputPropsType = {
   // eslint-disable-next-line no-unused-vars
@@ -18,9 +20,7 @@ const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [editable, setEditable] = useState(true);
-
-  const { ownerInfo, setOwnerInfoAndUpdateTime } = useSignUpInfo();
-
+  const { setOwnerInfoAndUpdateTime } = useSignUpInfo();
 
   const form = useRef<HTMLFormElement>(null);
 
@@ -29,23 +29,62 @@ const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({
     setLoading(true);
     setError("");
 
+    const ownerInfo = JSON.parse(
+      localStorage.getItem("Zulia_V1_create-owner-info")!,
+    );
+
+    console.log(ownerInfo);
+
     if (form.current !== null) {
       const formData = new FormData(form.current);
       const apartment = formData.get("apartment");
 
-      const newApartmentInfo = {
-        apartmentNumber: apartment as string,
-        ownerId: ownerInfo.ownerId,
-        aliquot: apartment === "LOC" ? 9.6568 : 3.7643,
-      };
+      if (ownerInfo.ownerId) {
+        const newApartmentInfo = {
+          apartmentNumber: apartment as string,
+          ownerId: ownerInfo.ownerId,
+          aliquot: apartment === "LOC" ? 9.6568 : 3.7643,
+        };
 
-      console.log(newApartmentInfo);
+        console.log(newApartmentInfo);
 
-      // TO DO: create method for creating apartments
-      // api.apartments.
+        // TO DO: create method for creating apartments
+        // api.apartments.
+        try {
+          // if the apartment exists returns its ID, else returns false
+          const apartmentAlreadyExists =
+            await api.apartments.checkApartmentExists(apartment as string);
+          console.log("Apartment exists: ", apartmentAlreadyExists);
+          if (apartmentAlreadyExists) {
+            const apartment = await api.apartments.getApartmentById(
+              apartmentAlreadyExists,
+            );
+            console.log({ ownerInfo });
+            if (apartment.ownerId !== ownerInfo.ownerId) {
+              throw "Apartamento ya registrado con otro propietario";
+            }
+            setOwnerInfoAndUpdateTime({
+              ...ownerInfo,
+              apartmentId: apartmentAlreadyExists,
+            });
+          } else {
+            const newApartment =
+              await api.apartments.createApartment(newApartmentInfo);
+            setOwnerInfoAndUpdateTime({
+              ...ownerInfo,
+              apartmentId: newApartment.id,
+            });
+          }
+          setEditable(false);
+          setStage();
+        } catch (error) {
+          setError(error as string);
+        }
+      } else {
+        console.error("ownerId is undefined:", { ownerInfo: ownerInfo });
+      }
+      setLoading(false);
     }
-
-    setStage();
   };
 
   return (
@@ -69,7 +108,9 @@ const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({
           ))}
         </select>
       </div>
-      <button>Guardar</button>
+      {loading && <LoadingMessage />}
+      {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
+      <button /*disabled={!editable || stage != 3}*/>Guardar</button>
     </form>
   );
 };

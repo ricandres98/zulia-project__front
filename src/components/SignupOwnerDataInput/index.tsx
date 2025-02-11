@@ -56,16 +56,16 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
       if (middleName) {
         Object.defineProperty(newOwnerInfo, "middleName", {
           value: middleName as string,
+          enumerable: true,
         });
       }
 
       if (secondLastName) {
         Object.defineProperty(newOwnerInfo, "secondLastName", {
           value: secondLastName as string,
+          enumerable: true,
         });
       }
-
-      console.log(newOwnerInfo);
 
       setOwnerInfoAndUpdateTime({
         ...ownerInfo,
@@ -76,6 +76,7 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
         ...newOwnerInfo,
         personId: ownerInfo.personId!,
       };
+
       try {
         const [reqError, ownerExists] = await api.owners.checkOwnerExists(
           `${ownerInfo.personId}`,

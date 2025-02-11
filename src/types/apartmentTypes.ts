@@ -9,3 +9,10 @@ export interface ApartmentType {
   debt: number | null;
   owner: OwnerType;
 }
+
+export interface createApartmentDto
+  extends Partial<Omit<ApartmentType, "id" | "createdAt" | "owner">> {
+  apartmentNumber: string;
+  aliquot: number;
+  ownerId: number;
+}
