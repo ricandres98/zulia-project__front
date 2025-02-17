@@ -85,7 +85,6 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
           throw reqError;
         } else if (ownerExists) {
           // If the owner already exists in the database just move on to next stage
-          setStage();
           const [err, data] = await api.owners.getOwnerByPersonId(
             `${ownerInfo.personId}`,
           );
@@ -97,6 +96,7 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
               ownerId: data.id,
             });
           }
+          setStage();
         } else {
           const [err, data] = await api.owners.createOwner(body);
           if (err) {

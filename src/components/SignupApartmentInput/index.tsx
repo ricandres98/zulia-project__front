@@ -20,7 +20,7 @@ const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [editable, setEditable] = useState(true);
-  const { setOwnerInfoAndUpdateTime } = useSignUpInfo();
+  const { ownerInfo, setOwnerInfoAndUpdateTime } = useSignUpInfo();
 
   const form = useRef<HTMLFormElement>(null);
 
@@ -29,9 +29,9 @@ const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({
     setLoading(true);
     setError("");
 
-    const ownerInfo = JSON.parse(
-      localStorage.getItem("Zulia_V1_create-owner-info")!,
-    );
+    // const ownerInfo = JSON.parse(
+    //   localStorage.getItem("Zulia_V1_create-owner-info")!,
+    // );
 
     console.log(ownerInfo);
 

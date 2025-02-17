@@ -1,0 +1,30 @@
+div.input-with-button.inferior-level-component {
+	width: 250px;
+	margin-bottom: 16px;
+	padding-right: 10px;
+	display: flex;
+	flex-direction: row;
+	background-color: #FFF;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+div.input-with-button:focus-within {
+	outline: 2px solid var(--black-blue);
+}
+
+div.input-with-button.inferior-level-component  input {
+	margin: 0;
+	border: none;
+}
+div.input-with-button.inferior-level-component input:focus {
+outline: none;
+}
+
+
+.input-with-button.inferior-level-component button.toggle {
+	background-color: unset;
+	border: none;
+	height: 40px;
+	padding: 0;
+}
