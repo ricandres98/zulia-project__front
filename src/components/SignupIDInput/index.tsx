@@ -78,7 +78,7 @@ const SignupIDInput: React.FC<SignupIDInputPropsType> = ({
       </div>
       {loading && <LoadingMessage />}
       {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      <button>Siguiente</button>
+      {stage === 1 && <button>Siguiente</button>}
     </form>
   );
 };

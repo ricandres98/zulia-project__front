@@ -110,7 +110,7 @@ const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({
       </div>
       {loading && <LoadingMessage />}
       {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      <button /*disabled={!editable || stage != 3}*/>Guardar</button>
+      {stage === 3 && <button>Guardar</button>}
     </form>
   );
 };

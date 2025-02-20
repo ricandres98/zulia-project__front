@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Header } from "../../components/Header";
 import { SignupIDInput } from "../../components/SignupIDInput";
 import { SignupApartmentInput } from "../../components/SignupApartmentInput";
-import { SignupEmailPswInput } from "../../components/SignupEmailPswInput";
+import { SignupEmailVerificationInput } from "../../components/SignupEmailVerificationInput";
 import { SignupOwnerDataInput } from "../../components/SignupOwnerDataInput";
 import styles from "./styles.module.css";
+import { SignupPswInput } from "../../components/SignupPswInput";
 function assignApartments(array: string[], letter: string) {
   for (let i = 1; i < 13; i++) {
     array.push(letter + i);
@@ -47,7 +48,8 @@ const SignUpPage = () => {
             setStage={() => setStage(4)}
           />
         )}
-        {stage >= 4 && <SignupEmailPswInput />}
+        {stage >= 4 && <SignupEmailVerificationInput />}
+        {stage >= 5 && <SignupPswInput />}
       </main>
     </>
   );

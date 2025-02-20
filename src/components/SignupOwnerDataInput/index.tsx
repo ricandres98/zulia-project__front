@@ -163,7 +163,7 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
       </div>
       {loading && <LoadingMessage />}
       {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      <button>Guardar</button>
+      {stage === 2 && <button>Guardar</button>}
     </form>
   );
 };
