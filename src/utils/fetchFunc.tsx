@@ -14,6 +14,7 @@ import type {
   CreateTransactionDto,
   TransactionWithId,
 } from "../types/transactionsTypes";
+import { VerificationEmailHTTPResponse, VerifyEmailDto } from "../types/verificationTypes";
 import { config } from "./config";
 
 const API_URL = config.apiUrl;
@@ -290,6 +291,33 @@ const api = {
       }
     },
   },
+
+  verifications: {
+    async verifyEmail(body: VerifyEmailDto): Promise<ResponseTuple<VerificationEmailHTTPResponse>>{
+      try {
+        const res = await fetch(`${API_URL}/api/v1/verification/verify-email`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers":
+              "Origin, X-Requested-With, Content-Type, Accept, Z-Key",
+            "Access-Control-Allow-Methods":
+              "GET, HEAD, POST, PUT, DELETE, OPTIONS",
+          },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (res.status !== 200) {
+          return [data, null];
+        } else {
+          return [null, data];
+        }
+      } catch (error: any) {
+        return [error, null];
+      }
+    }
+  }
 };
 
 export { api };
