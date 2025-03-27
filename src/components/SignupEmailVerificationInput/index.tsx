@@ -4,15 +4,22 @@ import { ErrorMessage } from "../ErrorMessage";
 import { LoadingMessage } from "../LoadingMessage";
 import { api } from "../../utils/fetchFunc";
 import { VerificationEmailHTTPResponse } from "../../types/verificationTypes";
+import { SignupVerificationCodeInput } from "../SignupVerificationCodeInput";
+import { useSignUpInfo } from "../../hooks/useSignUpInfo";
+import { Console } from "console";
 
-type SignupEmailVerificationInputPropsType = {};
+type SignupEmailVerificationInputPropsType = {
+  stage: number;
+  setStage: () => void;
+};
 
 const SignupEmailVerificationInput: React.FC<
   SignupEmailVerificationInputPropsType
-> = () => {
+> = ({stage, setStage}) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [mailSent, setMailSent] = useState(false);
+  const { ownerInfo, setOwnerInfoAndUpdateTime } = useSignUpInfo();
   const form = useRef<HTMLFormElement>(null);
 
   const handleSubmit: FormEventHandler = async (e) => {
@@ -23,6 +30,11 @@ const SignupEmailVerificationInput: React.FC<
     if (form.current !== null) {
       const formData = new FormData(form.current);
       const email = formData.get("email");
+      console.log("EMAIL EN INPUT: ", email)
+      setOwnerInfoAndUpdateTime({ 
+        ...ownerInfo,
+        email: email as string,
+      });
       const [error, response] = await api.verifications.verifyEmail({ email: email as string });
       if(error) {
         setError(error.message)
@@ -32,31 +44,36 @@ const SignupEmailVerificationInput: React.FC<
     }
   };
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={styles["registry-step-3"]}
-      ref={form}
-    >
+    <>
       {!mailSent ?
-        (
-          <>
-            <div>
-              <label htmlFor="email">Introduzca su correo electrónico</label>
-              <input type="email" id="email" name="email" required={true} />
-            </div>
-            {loading && <LoadingMessage />}
-            {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-            <button>Verificar</button>
-          </>
-        )
-        :
-        (
-          <>
-            <p>Email de verificación enviado. Revise su correo electrónico</p>
-          </>
-        )
-      }
-    </form>
+        ( 
+          <div>
+            <form
+              onSubmit={handleSubmit}
+              className={styles["registry-step-3"]}
+              ref={form}
+            >
+            <>
+              <div>
+                <label htmlFor="email">Introduzca su correo electrónico</label>
+                <input type="email" id="email" name="email" required={true} />
+              </div>
+              {loading && <LoadingMessage />}
+              {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
+              <button>Verificar</button>
+            </>
+            </form>
+          </div>
+          )
+          :
+          (
+              <div>
+                <p className={styles.message}>Email de verificación enviado. Revise su correo electrónico</p>
+                <SignupVerificationCodeInput stage={stage} setStage={setStage}/>
+              </div>
+          )
+        }
+    </>
   );
 };
 

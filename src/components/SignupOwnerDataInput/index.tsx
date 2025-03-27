@@ -120,51 +120,53 @@ const SignupOwnerDataInput: React.FC<SignupOwnerDataInputPropsType> = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      ref={form}
-      className={styles["registry-step-3"]}
-    >
-      <div>
-        <label htmlFor="first-name">* Nombre: </label>
-        <input
-          type="text"
-          id="first-name"
-          name="first-name"
-          defaultValue={ownerInfo?.firstName}
-          readOnly={!editable || stage !== 2}
-          required={true}
-        />
-        <label htmlFor="middle-name">Segundo nombre: </label>
-        <input
-          type="text"
-          id="middle-name"
-          name="middle-name"
-          defaultValue={ownerInfo.middleName || ""}
-          readOnly={!editable || stage !== 2}
-        />
-        <label htmlFor="last-name">* Apellido: </label>
-        <input
-          type="text"
-          id="last-name"
-          name="last-name"
-          defaultValue={ownerInfo.lastName}
-          readOnly={!editable || stage !== 2}
-          required={true}
-        />
-        <label htmlFor="second-last-name">Segundo apellido: </label>
-        <input
-          type="text"
-          id="second-last-name"
-          name="second-last-name"
-          defaultValue={ownerInfo.secondLastName || ""}
-          readOnly={!editable || stage !== 2}
-        />
-      </div>
-      {loading && <LoadingMessage />}
-      {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      {stage === 2 && <button>Guardar</button>}
-    </form>
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        ref={form}
+        className={styles["registry-step-3"]}
+      >
+        <div>
+          <label htmlFor="first-name">* Nombre: </label>
+          <input
+            type="text"
+            id="first-name"
+            name="first-name"
+            defaultValue={ownerInfo?.firstName}
+            readOnly={!editable || stage !== 2}
+            required={true}
+          />
+          <label htmlFor="middle-name">Segundo nombre: </label>
+          <input
+            type="text"
+            id="middle-name"
+            name="middle-name"
+            defaultValue={ownerInfo.middleName || ""}
+            readOnly={!editable || stage !== 2}
+          />
+          <label htmlFor="last-name">* Apellido: </label>
+          <input
+            type="text"
+            id="last-name"
+            name="last-name"
+            defaultValue={ownerInfo.lastName}
+            readOnly={!editable || stage !== 2}
+            required={true}
+          />
+          <label htmlFor="second-last-name">Segundo apellido: </label>
+          <input
+            type="text"
+            id="second-last-name"
+            name="second-last-name"
+            defaultValue={ownerInfo.secondLastName || ""}
+            readOnly={!editable || stage !== 2}
+          />
+        </div>
+        {loading && <LoadingMessage />}
+        {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
+        {stage === 2 && <button>Guardar</button>}
+      </form>
+    </div>
   );
 };
 

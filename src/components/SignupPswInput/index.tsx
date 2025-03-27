@@ -31,21 +31,21 @@ const SignupPswInput: React.FC<SignupPswInputInputPropsType> = () => {
     }
   };
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={styles["registry-step-3"]}
-      ref={form}
-    >
-      <div>
-        <label htmlFor="email">Introduzca su correo electrónico</label>
-        <input type="email" id="email" required={true} />
-        <InputPassword text={"Introduzca una contraseña"} id={"password"} />
-        <InputPassword text={"Confirme su contraseña"} id={"verify-password"} />
-      </div>
-      {loading && <LoadingMessage />}
-      {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      <button>Next</button>
-    </form>
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        className={styles["registry-step-3"]}
+        ref={form}
+      >
+        <div>
+          <InputPassword text={"Introduzca una contraseña"} id={"password"} />
+          <InputPassword text={"Confirme su contraseña"} id={"verify-password"} />
+        </div>
+        {loading && <LoadingMessage />}
+        {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
+        <button>Next</button>
+      </form>
+    </div>
   );
 };
 

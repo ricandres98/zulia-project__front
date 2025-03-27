@@ -62,24 +62,26 @@ const SignupIDInput: React.FC<SignupIDInputPropsType> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles["registry-step-1"]}>
-      <div>
-        <label htmlFor="cedula">Cédula de identidad:</label>
-        <input
-          type="number"
-          name="owner_id"
-          id="cedula"
-          ref={inputRef}
-          // value={id}
-          // onChange={(e) => setId(e.target.value)}
-          defaultValue={ownerInfo?.personId}
-          disabled={stage !== 1}
-        />
-      </div>
-      {loading && <LoadingMessage />}
-      {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      {stage === 1 && <button>Siguiente</button>}
-    </form>
+    <div>
+      <form onSubmit={handleSubmit} className={styles["registry-step-1"]}>
+        <div>
+          <label htmlFor="cedula">Cédula de identidad:</label>
+          <input
+            type="number"
+            name="owner_id"
+            id="cedula"
+            ref={inputRef}
+            // value={id}
+            // onChange={(e) => setId(e.target.value)}
+            defaultValue={ownerInfo?.personId}
+            disabled={stage !== 1}
+          />
+        </div>
+        {loading && <LoadingMessage />}
+        {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
+        {stage === 1 && <button>Siguiente</button>}
+      </form>
+    </div>
   );
 };
 

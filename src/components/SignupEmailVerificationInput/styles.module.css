@@ -1,15 +1,50 @@
+.registry-step-3 {
+  display: grid;
+  place-items: center;
+  padding: 15px 0;
+  font-size: 1.6rem;
+}
+
 .registry-step-3 div {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .registry-step-3 div input {
-    max-width: 350px;
+  max-width: 350px;
+  margin-bottom: 16px;
+  padding: 10px;
+  width: 250px;
+  /* height: 50px; */
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  font-size: 1.4rem;
+  font-family: var(--font);
+}
+.registry-step-3 div button {
+  border: none;
+  padding: 10px 15px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--white);
+  background-color: var(--black-blue);
+  border-radius: 5px;
+  text-transform: capitalize;
+  cursor: pointer;
 }
 
-.registry-step-3 div input[type=number]::-webkit-inner-spin-button, 
-.registry-step-3 div input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
+.registry-step-3 div input[type=number]::-webkit-inner-spin-button,
+.registry-step-3 div input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+p.message {
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  background-color: var(--dark-blue-1);
+  color: var(--white);
+  border-radius: 5px;
 }

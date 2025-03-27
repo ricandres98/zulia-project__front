@@ -46,9 +46,14 @@ const SignUpPage = () => {
             stage={stage}
             apartmentsArray={apartmentsArray}
             setStage={() => setStage(4)}
+            />
+          )}
+        {stage >= 4 && (
+          <SignupEmailVerificationInput 
+            stage={stage} 
+            setStage={() => setStage(5)}
           />
         )}
-        {stage >= 4 && <SignupEmailVerificationInput />}
         {stage >= 5 && <SignupPswInput />}
       </main>
     </>

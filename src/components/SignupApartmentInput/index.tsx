@@ -88,30 +88,32 @@ const SignupApartmentInput: React.FC<SignupApartmentInputPropsType> = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      ref={form}
-      className={styles["registry-step-2"]}
-    >
-      <div>
-        <label htmlFor="apartment">Seleccione el apartamento:</label>
-        <select
-          name="apartment"
-          id="apartment"
-          // TO DO: make uneditable after saving
-          aria-readonly={!editable || stage != 3}
-        >
-          {apartmentsArray.map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-      </div>
-      {loading && <LoadingMessage />}
-      {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
-      {stage === 3 && <button>Guardar</button>}
-    </form>
+    <div>
+      <form
+        onSubmit={handleSubmit}
+        ref={form}
+        className={styles["registry-step-2"]}
+      >
+        <div>
+          <label htmlFor="apartment">Seleccione el apartamento:</label>
+          <select
+            name="apartment"
+            id="apartment"
+            // TO DO: make uneditable after saving
+            aria-readonly={!editable || stage != 3}
+          >
+            {apartmentsArray.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+        {loading && <LoadingMessage />}
+        {!loading && error && <ErrorMessage>{error}</ErrorMessage>}
+        {stage === 3 && <button>Guardar</button>}
+      </form>
+    </div>
   );
 };
 
