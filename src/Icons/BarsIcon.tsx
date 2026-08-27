@@ -9,7 +9,7 @@ const BarsIcon = (): React.JSX.Element => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={styles.size}
+      className={styles["size-32"]}
     >
       <path
         strokeLinecap="round"

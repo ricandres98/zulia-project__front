@@ -1,21 +1,20 @@
-import React from "react";
-import { Header } from "../components/Header";
-import styles from "../styles/Home.module.css";
-import { ReceiptsTable } from "../components/ReceiptsTable";
-import { AuthorizationContainer } from "../containers/AuthorizationContainer";
-import { FullScreenLoader } from "../components/FullScreenLoader";
+import React, { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
+import { authContext } from "../hooks/useAuth";
 
 export default function Home() {
-  return (
-    <>
-      <AuthorizationContainer>
-        <FullScreenLoader />
-        <Header />
-        <main className={styles["main-container"]}>
-          <h2>Apartamento 9A</h2>
-          <ReceiptsTable />
-        </main>
-      </AuthorizationContainer>
-    </>
-  );
+  const router = useRouter();
+  const { isAuth, isAdmin } = useContext(authContext);
+
+  useEffect(() => {
+    if (router.isReady) {
+      if (!isAuth) {
+        router.push("/login");
+      } else {
+        router.push(isAdmin ? "admin/home/" : "user/home/");
+      }
+    }
+  }, [router, isAuth, isAdmin]);
+
+  return <></>;
 }

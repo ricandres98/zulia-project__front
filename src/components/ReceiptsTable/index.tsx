@@ -1,23 +1,18 @@
 import Link from "next/link";
 import styles from "./styles.module.css";
-import { useFetch } from "../../hooks/useFetch";
-import { useEffect, useState } from "react";
 import { ReceiptGeneralInfoType } from "../../types/receiptTypes";
+import { formatDate } from "../../utils/formatDate";
+import { api } from "../../utils/fetchFunc";
+import { useTokenFetch } from "../../hooks/useTokenFetch";
+import { useState } from "react";
 
 const ReceiptsTable = () => {
   const [receipts, setReceipts] = useState<ReceiptGeneralInfoType[]>([]);
-  const { getReceiptsList } = useFetch();
 
-  useEffect(() => {
-    (async () => {
-      const [err, data] = await getReceiptsList();
-      if (!err) {
-        setReceipts(data);
-      } else {
-        console.error(err);
-      }
-    })();
-  }, []);
+  useTokenFetch({
+    setInfo: setReceipts,
+    callback: api.receipts.getReceiptsList,
+  });
 
   return (
     <>
@@ -67,10 +62,10 @@ const ReceiptRowComponent = ({
 }: ReceiptGeneralInfoType) => {
   return (
     <Link
-      href={`/receipt/${id}`}
+      href={`/user/receipt/${id}`}
       className={styles.ReceiptsTable__content__row}
     >
-      <span>{date}</span>
+      <span>{formatDate(date)}</span>
       <span>{month}</span>
       <span>{year}</span>
     </Link>

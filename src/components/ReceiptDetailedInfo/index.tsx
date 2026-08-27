@@ -6,23 +6,23 @@ import styles from "./styles.module.css";
 
 interface PropTypes {
   receiptInfo: ReceiptDetailedInfoType | undefined;
+  loading: boolean;
+  error: boolean;
 }
 
-const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
-  if (typeof receiptInfo === "undefined") {
-    return (
-      <>
-        <p>Ha habido un problema al cargar la información</p>
-      </>
-    );
-  } else {
-    const subtotal: number = receiptInfo.expenses
+const ReceiptDetailedInfo = ({ receiptInfo, loading, error }: PropTypes) => {
+  if (loading) {
+    return <p>Cargando...</p>;
+  } else if (error) {
+    return <p>Al parecer ha habido un error</p>;
+  } else if (receiptInfo) {
+    const subtotal: number = receiptInfo.period.commonExpenses
       .map((expense: ExpensesType) => expense.amount)
       .reduce((prev: number, curr: number) => prev + curr, 0);
 
     const reserva20 = subtotal * 0.2;
     const total = subtotal + reserva20;
-    const aliquot = (total * receiptInfo.aliquot) / 100;
+    const aliquot = (total * receiptInfo.apartment.aliquot) / 100;
 
     return (
       <div className="DetailedInfo">
@@ -31,7 +31,7 @@ const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
           <span>Monto</span>
         </div>
         <div className={styles["DetailedInfo-separator"]}>
-          {receiptInfo?.expenses.map((expense: ExpensesType) => (
+          {receiptInfo?.period.commonExpenses.map((expense: ExpensesType) => (
             <ExpenseItem
               key={expense.description}
               description={expense.description}
@@ -61,10 +61,15 @@ const ReceiptDetailedInfo = ({ receiptInfo }: PropTypes) => {
             extraClass="aliquot"
           />
         </div>
-        <div className={styles["DetailedInfo-separator"]}>
-          <ExpenseItem description="Deuda" amount={100} />
-          <ExpenseItem description="Penalidad" amount={100} />
-        </div>
+        {receiptInfo.apartment.debt && (
+          <div className={styles["DetailedInfo-separator"]}>
+            <ExpenseItem
+              description="Deuda"
+              amount={receiptInfo.apartment.debt}
+            />
+            {/* <ExpenseItem description="Penalidad" amount={receiptInfo.penalty} /> */}
+          </div>
+        )}
         <div className={styles["DetailedInfo-separator"]}>
           <ExpenseItem
             extraClass="total"

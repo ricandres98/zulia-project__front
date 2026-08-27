@@ -1,0 +1,14 @@
+.error-container {
+    max-width: 1024px;
+    padding: 20px;
+    margin: 0 auto;
+    display: grid;
+    justify-items: center;
+}
+
+.error-container p {
+    font-family: var(--font);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--black-blue);
+}

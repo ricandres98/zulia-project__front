@@ -15,7 +15,7 @@ const UserIcon = ({ color }: PropType): React.JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={styles.size}
+      className={styles["size-32"]}
       style={color ? inlineStyles : undefined}
     >
       <path

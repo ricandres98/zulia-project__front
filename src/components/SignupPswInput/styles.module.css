@@ -1,0 +1,15 @@
+.registry-step-3 div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+.registry-step-3 div input {
+    max-width: 350px;
+}
+
+.registry-step-3 div input[type=number]::-webkit-inner-spin-button, 
+.registry-step-3 div input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}

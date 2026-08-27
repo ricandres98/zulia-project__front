@@ -1,21 +1,51 @@
-import React, { FormEventHandler, useContext } from "react";
+import React, { FormEventHandler, useContext, useRef, useState } from "react";
 import styles from "./styles.module.css";
-import { authContext } from "../../hooks/useAuth";
+import { LoginBody, authContext } from "../../hooks/useAuth";
 import { useRouter } from "next/router";
+import { LoadingMessage } from "../LoadingMessage";
+import { ErrorMessage } from "../ErrorMessage";
+import Link from "next/link";
 
 const LoginForm = () => {
-  const { login } = useContext(authContext);
+  const { login, setAdmin } = useContext(authContext);
+  const [unauthorized, setUnauthorized] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSubmit: FormEventHandler = (e) => {
+  const form = useRef<HTMLFormElement>(null);
+
+  const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    login();
-    router.push("/");
+    if (form.current !== null) {
+      const formData = new FormData(form.current);
+      const isAdmin = formData.get("admin");
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      if (email && password) {
+        setLoading(true);
+        setUnauthorized(false);
+        const body = {
+          email,
+          password,
+        };
+        isAdmin && setAdmin(true);
+        const [error, data] = await login(body as LoginBody);
+        setLoading(false);
+
+        if (error) {
+          setUnauthorized(true);
+        } else if (data) {
+          router.push(isAdmin ? "/admin/home/" : "/user/home/");
+        }
+      }
+    }
   };
 
   return (
     <>
       <form
+        ref={form}
         onSubmit={(e) => handleSubmit(e)}
         className={styles["form-container"]}
       >
@@ -30,7 +60,18 @@ const LoginForm = () => {
           <span>Ingresar como administrador</span>
         </label>
 
+        {unauthorized && (
+          <ErrorMessage>Email o contraseña incorrectos</ErrorMessage>
+        )}
+
+        {loading && <LoadingMessage />}
+
         <button>Ingresar</button>
+
+        <div className={styles["form-links"]}>
+          <Link href={"/signup"}>Registrarse</Link>
+          <Link href={"/"}>Olvidé mi contraseña</Link>
+        </div>
       </form>
     </>
   );

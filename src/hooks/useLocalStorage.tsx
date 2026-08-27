@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const useLocalStorage = (itemName: string, initialValue: unknown) => {
+function useLocalStorage<T>(itemName: string, initialValue: T) {
   const [item, setItem] = React.useState(initialValue);
 
   useEffect(() => {
@@ -13,12 +13,12 @@ const useLocalStorage = (itemName: string, initialValue: unknown) => {
     }
   }, []);
 
-  const saveItem = (value: any) => {
+  const saveItem = (value: T) => {
     setItem(value);
     localStorage.setItem(itemName, JSON.stringify(value));
   };
 
   return { item, saveItem };
-};
+}
 
 export { useLocalStorage };
