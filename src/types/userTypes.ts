@@ -17,3 +17,15 @@ export interface UserType {
 export interface UserTypeWithId extends UserType {
   id: number;
 }
+
+interface UserTypefromAPI {
+  id: number;
+  email: string;
+  password: string;
+  apartmentId: number;
+  role: "user" | "admin";
+}
+
+interface CreateUserDto extends Omit< UserTypefromAPI, "id"> {}
+
+export type { UserTypefromAPI, CreateUserDto };

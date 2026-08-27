@@ -35,6 +35,7 @@ body {
   background-color: var(--background-white);
   font-family: var(--font);
   overflow-x: hidden;
+  min-height: 100vh
 }
 
 ul {

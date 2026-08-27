@@ -6,6 +6,7 @@ import { SignupEmailVerificationInput } from "../../components/SignupEmailVerifi
 import { SignupOwnerDataInput } from "../../components/SignupOwnerDataInput";
 import styles from "./styles.module.css";
 import { SignupPswInput } from "../../components/SignupPswInput";
+import SignUpNotificationModal from "../../components/SignUpNotificationModal";
 function assignApartments(array: string[], letter: string) {
   for (let i = 1; i < 13; i++) {
     array.push(letter + i);
@@ -27,6 +28,7 @@ const SignUpPage = () => {
       <Header />
       <main className={styles["main-container"]}>
         <h1>Registro</h1>
+        {stage >= 1 && <SignUpNotificationModal />}
         <SignupIDInput
           stage={stage}
           setStage={() => {
@@ -54,7 +56,7 @@ const SignUpPage = () => {
             setStage={() => setStage(5)}
           />
         )}
-        {stage >= 5 && <SignupPswInput />}
+        {stage >= 5 && <SignupPswInput setStage={() => setStage(6)} />}
       </main>
     </>
   );
